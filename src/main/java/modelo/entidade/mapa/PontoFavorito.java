@@ -4,16 +4,28 @@ import modelo.excecao.mapa.StatusInvalidoException;
 
 public class PontoFavorito extends Ponto {
 
+	private int idPontoFav;
 	private String nomePonto;
 
+	public PontoFavorito(int idPontoFav, Ponto ponto, String nomePonto) throws StatusInvalidoException {
+		super(ponto.getLatitude(), ponto.getLongitude());
+		
+		setIdPontoFav(idPontoFav);
+		setNomePonto(nomePonto);
+	}
+	
 	public PontoFavorito(Ponto ponto, String nomePonto) throws StatusInvalidoException {
 		super(ponto.getLatitude(), ponto.getLongitude());
 		setNomePonto(nomePonto);
 	}
 
-	public PontoFavorito(Ponto ponto) throws StatusInvalidoException {
-		super(ponto.getLatitude(), ponto.getLongitude());
-
+	
+	public int getIdPontoFav() {
+		return idPontoFav;
+	}
+	
+	public void setIdPontoFav(int idPontoFav) {
+		this.idPontoFav = idPontoFav;
 	}
 
 	public String getNomePonto() {
@@ -28,18 +40,6 @@ public class PontoFavorito extends Ponto {
 
 		return new PontoFavorito(ponto, nomePonto);
 
-	}
-	
-	public static PontoFavorito favoritarPonto(Ponto ponto) throws StatusInvalidoException {
-
-		return new PontoFavorito(ponto);
-
-	}
-
-
-	public static PontoFavorito desfavoritarPonto(PontoFavorito ponto) throws StatusInvalidoException {
-
-		return new PontoFavorito(ponto);
 	}
 	
 	
