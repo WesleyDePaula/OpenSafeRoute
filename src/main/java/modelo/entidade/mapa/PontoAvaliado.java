@@ -11,6 +11,7 @@ import modelo.excecao.mapa.StatusInvalidoException;
 
 public class PontoAvaliado extends Ponto {
 
+	private int idPontoAvaliado;
 	private List<Formulario> avaliacoes;
 	private double nivelDeCriminalidade;
 	private int nivelDeEstruturaDaRua;
@@ -19,10 +20,26 @@ public class PontoAvaliado extends Ponto {
 	private NivelBloqueio bloqueio;
 	private int mediaDeAvaliacao;
 
+	public PontoAvaliado(int idPontoAvaliado, Ponto ponto, Formulario avaliacao) throws StatusInvalidoException, NullPointerException {
+		super(ponto.getLatitude(), ponto.getLatitude());
+		
+		this.setIdPontoAvaliado(idPontoAvaliado);
+		this.addAvaliacao(avaliacao);
+
+	}
+	
 	public PontoAvaliado(Ponto ponto, Formulario avaliacao) throws StatusInvalidoException, NullPointerException {
 		super(ponto.getLatitude(), ponto.getLatitude());
 		this.addAvaliacao(avaliacao);
 
+	}
+	
+	public int getIdPontoAvaliado() {
+		return idPontoAvaliado;
+	}
+	
+	public void setIdPontoAvaliado(int idPontoAvaliado) {
+		this.idPontoAvaliado = idPontoAvaliado;
 	}
 
 	public int getMediaDeAvaliacao() {
