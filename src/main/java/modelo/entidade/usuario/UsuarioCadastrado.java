@@ -126,16 +126,4 @@ public class UsuarioCadastrado extends Usuario {
 		favoritos.add((PontoFavorito) ponto);
 
 	}
-
-	public void favoritar(Ponto ponto) throws StatusInvalidoException {
-		PontoFavorito.favoritarPonto(ponto);
-		favoritos.add((PontoFavorito) ponto);
-
-	}
-
-	public void desfavoritar(PontoFavorito pontoFavorito) throws StatusInvalidoException {
-		PontoFavorito.desfavoritarPonto((PontoFavorito) pontoFavorito);
-		favoritos.remove(pontoFavorito);
-
-	}
 }
