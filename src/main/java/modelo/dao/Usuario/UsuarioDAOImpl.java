@@ -14,6 +14,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	}
 
 	public void cadastrarUsuario(UsuarioCadastrado usuario) {
+		
 		Connection conexao = null;
 		PreparedStatement insert = null;
 
@@ -52,5 +53,41 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		
 	}
 
+	public void deletarUsuario(UsuarioCadastrado usuario) {
+		
+		Connection conexao = null;
+		PreparedStatement delete = null;
+		
+		try {
+			
+			conexao = conectarBanco();
+			delete = conexao.prepareStatement("DELETE FROM usuario WHERE (id_usuario = ?)");
+			
+			delete.setInt(1, usuario.getIdUsuario());
+			
+			delete.execute();
+			
+		} catch (SQLException erro) {
+			erro.printStackTrace();
+		}
+		
+		finally {
+			
+			try {
 
+				if (delete != null)
+					delete.close();
+
+				if (conexao != null)
+					conexao.close();
+
+			} catch (SQLException erro) {
+
+				erro.printStackTrace();
+			}
+			
+		}
+		
+	}
+	
 }
