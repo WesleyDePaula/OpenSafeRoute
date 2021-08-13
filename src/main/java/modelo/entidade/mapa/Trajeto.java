@@ -1,4 +1,4 @@
-package model.entities.map;
+package modelo.entidade.mapa;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,9 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import model.enumeration.map.MeioDeTransporte;
+import modelo.enumeracao.mapa.MeioDeTransporte;
+import modelo.excecao.mapa.StatusInvalidoException;
+import modelo.entidade.mapa.Ponto;
 
 public class Trajeto {
 
@@ -19,7 +21,7 @@ public class Trajeto {
 	private Ponto chegada;
 	private MeioDeTransporte transporteUsado;
 
-	public Trajeto(ponto inicio,Ponto chegada,MeioDeTransporte transporteUsado) {
+	public Trajeto(String inicio, String chegada,MeioDeTransporte transporteUsado) throws StatusInvalidoException {
 		this.setInicio(inicio);
 		this.setChegada(chegada);
 		this.setTransporteUsado(transporteUsado);
@@ -27,27 +29,13 @@ public class Trajeto {
 		
 	}
 
-	public Ponto informatLocal(String local) {
-//		String localParaURL = local.replaceAll(" ", "%20");
-//		Client client = ClientBuilder.newClient();
-//		Response response = client.target(
-//				"https://api.openrouteservice.org/geocode/search?api_key=5b3ce3597851110001cf624839b64a140f534a82a4750d447a4df110&text="
-//						+ localParaURL)
-//				.request(MediaType.TEXT_PLAIN_TYPE)
-//				.header("Accept", "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8")
-//				.get();
-		// tratar para devolover latitude e longitude
-		// return Ponto localTratado = new Ponto(latitude, longitude);
-
-		return new Ponto(0, 0);
-	}
 
 	public Ponto getInicio() {
 		return inicio;
 	}
 
-	public void setInicio(String inicio) {
-		this.inicio = this.informatLocal(inicio);
+	public void setInicio(String inicio) throws StatusInvalidoException {
+		this.inicio = Ponto.informatLocal(inicio);
 	}
 
 	public List<Ponto> getPontos() {
@@ -72,8 +60,8 @@ public class Trajeto {
 		return chegada;
 	}
 
-	public void setChegada(String chegada) {
-		this.chegada = this.informatLocal(chegada);
+	public void setChegada(String chegada) throws StatusInvalidoException {
+		this.chegada = Ponto.informatLocal(chegada);
 	}
 
 	public MeioDeTransporte getTransporteUsado() {

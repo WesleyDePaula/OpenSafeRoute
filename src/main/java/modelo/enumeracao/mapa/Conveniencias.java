@@ -1,4 +1,4 @@
-package model.enumeration.map;
+package modelo.enumeracao.mapa;
 
 public enum Conveniencias {
 

@@ -108,14 +108,14 @@ public class Ponto {
 	}
 
 	public ArrayList<Double> transformarPontoEmVetor() {
-		ArrayList<Double> pontoVetro = new ArrayList<>(2);
+		ArrayList<Double> pontoVetro = new ArrayList<Double>(2);
 		pontoVetro.add(this.getLongitude());
 		pontoVetro.add(this.getLatitude());
 		return pontoVetro;
 	}
 
 	public ArrayList<Double> transformarPontoEmVetorComElevacao() {
-		ArrayList<Double> pontoVetro = new ArrayList<>(3);
+		ArrayList<Double> pontoVetro = new ArrayList<Double>(3);
 		pontoVetro.add(this.getLongitude());
 		pontoVetro.add(this.getLatitude());
 		pontoVetro.add((double)this.getAltitude());
