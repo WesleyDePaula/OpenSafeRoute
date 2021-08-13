@@ -6,6 +6,7 @@ import modelo.enumeracao.mapa.Ocorrencia;
 
 public class Formulario {
 
+	private int idFormulario;
 	private double media;
 	private Ocorrencia ocorrencia;
 	private Estrelas nivelEstrutura;
@@ -25,6 +26,28 @@ public class Formulario {
 		setComentario(comentario);
 		setMedia();
 
+	}
+	
+	public Formulario(int idFormulario, Ocorrencia ocorrencia, Estrelas nivelEstrutura, Estrelas nivelIluminacao, NivelBloqueio bloqueioRuas,
+			Estrelas NivelTransito, String comentario) {
+
+		setIdFormulario(idFormulario);
+		setOcorrencia(ocorrencia);
+		setNivelEstrutura(nivelEstrutura);
+		setNivelIluminacao(nivelIluminacao);
+		setNivelBloqueio(bloqueioRuas);
+		setNivelTransito(NivelTransito);
+		setComentario(comentario);
+		setMedia();
+
+	}
+	
+	public int getIdFormulario() {
+		return idFormulario;
+	}
+	
+	public void setIdFormulario(int idFormulario) {
+		this.idFormulario = idFormulario;
 	}
 
 	public Estrelas getNivelEstrutura() {
