@@ -1,4 +1,4 @@
-package model.exception.Map;
+package modelo.excecao.mapa;
 
 public class StatusInvalidoException extends Exception{
 	

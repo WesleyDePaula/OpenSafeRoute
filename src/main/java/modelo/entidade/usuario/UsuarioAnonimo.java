@@ -1,4 +1,4 @@
-package model.entities.usuario;
+package modelo.entidade.usuario;
 
 public class UsuarioAnonimo extends Usuario{
 

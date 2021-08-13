@@ -1,4 +1,4 @@
-package model.exception.usuario;
+package modelo.excecao.usuario;
 
 public class CodigoInvalidoException extends Exception {
 	public CodigoInvalidoException(String codigo) {
