@@ -1,6 +1,7 @@
 package modelo.entidade.mapa;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,7 +18,7 @@ import modelo.entidade.mapa.Ponto;
 public class Trajeto {
 
 	private Ponto inicio;
-	private List<Ponto> pontos;
+	private LinkedList<Ponto> pontos;
 	private Ponto chegada;
 	private MeioDeTransporte transporteUsado;
 
