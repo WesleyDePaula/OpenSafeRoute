@@ -13,6 +13,7 @@ import modelo.excecao.mapa.StatusInvalidoException;
 
 public class Ponto {
 
+	private int id; 
 	private double latitude;
 	private double longitude;
 	private int altitute;
@@ -89,6 +90,14 @@ public class Ponto {
 		
 		this.altitute = 0;
 		
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return id;
 	}
 
 	private void setLatitude(double latitude) {
