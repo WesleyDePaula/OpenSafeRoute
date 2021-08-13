@@ -14,17 +14,35 @@ import modelo.excecao.usuario.StringVaziaException;
 
 public class UsuarioCadastrado extends Usuario {
 
+	private int idUsuario;
 	private String nome;
 	private String senha;
 	private String email;
 	private List<PontoFavorito> favoritos;
 
+	public UsuarioCadastrado(int idUsuario, String nome, String senha, String email)
+			throws StringVaziaException, EmailInvalidoException, SenhaPequenaException {
+		super();
+		
+		this.setNome(nome);
+		this.setSenha(senha);
+		this.setEmail(email);
+	}
+	
 	public UsuarioCadastrado(String nome, String senha, String email)
 			throws StringVaziaException, EmailInvalidoException, SenhaPequenaException {
 		super();
 		this.setNome(nome);
 		this.setSenha(senha);
 		this.setEmail(email);
+	}
+	
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+	
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 	public String getNome() {
