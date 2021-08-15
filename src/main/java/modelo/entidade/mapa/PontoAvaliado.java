@@ -1,12 +1,9 @@
 package modelo.entidade.mapa;
 
-import java.rmi.StubNotFoundException;
 import java.util.List;
 
 import modelo.entidade.formulario.Formulario;
-import modelo.enumeracao.mapa.Estrelas;
 import modelo.enumeracao.mapa.NivelBloqueio;
-import modelo.enumeracao.mapa.Ocorrencia;
 import modelo.excecao.mapa.StatusInvalidoException;
 
 public class PontoAvaliado extends Ponto {

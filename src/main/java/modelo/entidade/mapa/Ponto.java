@@ -1,6 +1,5 @@
 package modelo.entidade.mapa;
 
-import java.rmi.StubNotFoundException;
 import java.util.ArrayList;
 
 import javax.ws.rs.client.Client;

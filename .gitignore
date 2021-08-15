@@ -1,6 +1,6 @@
-target/
-.classpath
-.project
-.settings/
-bin/
-.vscode
+*target/
+*.classpath/
+*.project/
+*.settings/
+*bin/
+*.vscode

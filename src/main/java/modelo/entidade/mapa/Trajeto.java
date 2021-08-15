@@ -1,19 +1,13 @@
 package modelo.entidade.mapa;
 
-import java.util.ArrayList;
+
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import modelo.enumeracao.mapa.MeioDeTransporte;
 import modelo.excecao.mapa.StatusInvalidoException;
-import modelo.entidade.mapa.Ponto;
+
 
 public class Trajeto {
 
