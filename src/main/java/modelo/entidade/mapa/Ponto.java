@@ -1,6 +1,5 @@
 package modelo.entidade.mapa;
 
-import java.rmi.StubNotFoundException;
 import java.util.ArrayList;
 
 import javax.ws.rs.client.Client;
@@ -13,6 +12,7 @@ import modelo.excecao.mapa.StatusInvalidoException;
 
 public class Ponto {
 
+	private int idPonto; 
 	private double latitude;
 	private double longitude;
 	private int altitute;
@@ -89,6 +89,14 @@ public class Ponto {
 		
 		this.altitute = 0;
 		
+	}
+	
+	public void setId(int id) {
+		this.idPonto = id;
+	}
+	
+	public int getId() {
+		return idPonto;
 	}
 
 	private void setLatitude(double latitude) {

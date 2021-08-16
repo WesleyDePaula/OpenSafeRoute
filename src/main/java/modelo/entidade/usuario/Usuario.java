@@ -1,6 +1,5 @@
 package modelo.entidade.usuario;
 
-import java.util.Set;
 import modelo.entidade.mapa.*;
 import modelo.enumeracao.mapa.MeioDeTransporte;
 import modelo.excecao.mapa.StatusInvalidoException;
