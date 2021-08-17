@@ -4,6 +4,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+
 import modelo.entidade.formulario.Formulario;
 import modelo.entidade.mapa.Ponto;
 import modelo.entidade.mapa.PontoFavorito;
@@ -11,15 +17,31 @@ import modelo.excecao.mapa.StatusInvalidoException;
 import modelo.excecao.usuario.EmailInvalidoException;
 import modelo.excecao.usuario.SenhaPequenaException;
 import modelo.excecao.usuario.StringVaziaException;
+@Entity
+@Table(name = "UsuarioCadastrado")
+public class UsuarioCadastrado extends Usuario implements Serializable {
 
-public class UsuarioCadastrado extends Usuario {
+	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_Usuario",nullable = false)
 	private int idUsuario;
+	
+	@Column(name = "nome_Usuario", length = 45, nullable = false, unique = true)
 	private String nome;
+	
+	@Column(name = "Senha", length = 45, nullable = false)
 	private String senha;
+	
+	@Column(name = "email", length = 45, nullable = false, unique = true)
 	private String email;
+	
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "Usuario", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PontoFavorito> favoritos;
-
+	
+	public UsuarioCadastrado() {}
+	
 	public UsuarioCadastrado(int idUsuario, String nome, String senha, String email)
 			throws StringVaziaException, EmailInvalidoException, SenhaPequenaException {
 		super();
