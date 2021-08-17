@@ -15,7 +15,7 @@ import modelo.excecao.mapa.StatusInvalidoException;
 public class Ponto {
 
 	private int idPonto; 
-	private Point ponto;
+	private Point LongLatAlt;
 
 	public Ponto(double latitude, double longitude) throws StatusInvalidoException {
 		this.setLatitude(latitude);
@@ -54,16 +54,16 @@ public class Ponto {
 		return new Ponto(0,0);
 	}
 
-	public Point getPonto() {
-		return ponto;
+	public Point getLongLatAlt() {
+		return LongLatAlt;
 	}
 
-	public void setPonto(Point ponto) {
-		this.ponto = ponto;
+	public void setLongLatAlt(Point ponto) {
+		this.LongLatAlt = ponto;
 	}
 
 	public int getAltitude() {
-		return (int) getPonto().getCoordinates().getAltitude();
+		return (int) getLongLatAlt().getCoordinates().getAltitude();
 	}
 
 	private void setAltitude() throws  StatusInvalidoException {
@@ -95,7 +95,7 @@ public class Ponto {
 		
 		//tratamento GeoJSON
 		
-		this.getPonto().getCoordinates().setAltitude(0);
+		this.getLongLatAlt().getCoordinates().setAltitude(0);
 		
 	}
 	
@@ -108,19 +108,19 @@ public class Ponto {
 	}
 
 	private void setLatitude(double latitude) {
-		this.getPonto().getCoordinates().setLatitude(latitude);
+		this.getLongLatAlt().getCoordinates().setLatitude(latitude);
 	}
 
 	public double getLatitude() {
-		return getPonto().getCoordinates().getLatitude();
+		return getLongLatAlt().getCoordinates().getLatitude();
 	}
 
 	private void setLongitude(double longitude) {
-		this.getPonto().getCoordinates().setLongitude(longitude);;
+		this.getLongLatAlt().getCoordinates().setLongitude(longitude);;
 	}
 
 	public double getLongitude() {
-		return getPonto().getCoordinates().getLongitude();
+		return getLongLatAlt().getCoordinates().getLongitude();
 	}
 
 	public ArrayList<Double> transformarPontoEmVetor() {
