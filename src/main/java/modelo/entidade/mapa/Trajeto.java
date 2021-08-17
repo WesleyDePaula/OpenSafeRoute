@@ -1,9 +1,6 @@
 package modelo.entidade.mapa;
 
-
-import java.util.LinkedList;
-import java.util.List;
-
+import org.geojson.LineString;
 
 import modelo.enumeracao.mapa.MeioDeTransporte;
 import modelo.excecao.mapa.StatusInvalidoException;
@@ -12,7 +9,7 @@ import modelo.excecao.mapa.StatusInvalidoException;
 public class Trajeto {
 
 	private Ponto inicio;
-	private LinkedList<Ponto> pontos;
+	private LineString pontos;
 	private Ponto chegada;
 	private MeioDeTransporte transporteUsado;
 
@@ -33,7 +30,7 @@ public class Trajeto {
 		this.inicio = Ponto.informatLocal(inicio);
 	}
 
-	public List<Ponto> getPontos() {
+	public LineString getPontos() {
 		return pontos;
 	}
 
