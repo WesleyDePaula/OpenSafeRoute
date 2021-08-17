@@ -16,7 +16,7 @@ public abstract class Usuario {
 
 	public MeioDeTransporte DefinirTransporte(MeioDeTransporte transporte) {
 		return transporte;
-	}
+	} 
 
 	public Trajeto trajeto(String inicio, String chegada, MeioDeTransporte transporte) throws StatusInvalidoException {
 
