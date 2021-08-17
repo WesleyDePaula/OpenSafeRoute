@@ -8,14 +8,14 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.geojson.Point;
+
 import modelo.excecao.mapa.StatusInvalidoException;
 
 public class Ponto {
 
 	private int idPonto; 
-	private double latitude;
-	private double longitude;
-	private int altitute;
+	private Point ponto;
 
 	public Ponto(double latitude, double longitude) throws StatusInvalidoException {
 		this.setLatitude(latitude);
@@ -54,8 +54,16 @@ public class Ponto {
 		return new Ponto(0,0);
 	}
 
+	public Point getPonto() {
+		return ponto;
+	}
+
+	public void setPonto(Point ponto) {
+		this.ponto = ponto;
+	}
+
 	public int getAltitude() {
-		return altitute;
+		return (int) getPonto().getCoordinates().getAltitude();
 	}
 
 	private void setAltitude() throws  StatusInvalidoException {
@@ -87,7 +95,7 @@ public class Ponto {
 		
 		//tratamento GeoJSON
 		
-		this.altitute = 0;
+		this.getPonto().getCoordinates().setAltitude(0);
 		
 	}
 	
@@ -100,19 +108,19 @@ public class Ponto {
 	}
 
 	private void setLatitude(double latitude) {
-		this.latitude = latitude;
+		this.getPonto().getCoordinates().setLatitude(latitude);
 	}
 
 	public double getLatitude() {
-		return latitude;
+		return getPonto().getCoordinates().getLatitude();
 	}
 
 	private void setLongitude(double longitude) {
-		this.longitude = longitude;
+		this.getPonto().getCoordinates().setLongitude(longitude);;
 	}
 
 	public double getLongitude() {
-		return longitude;
+		return getPonto().getCoordinates().getLongitude();
 	}
 
 	public ArrayList<Double> transformarPontoEmVetor() {
