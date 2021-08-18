@@ -23,6 +23,8 @@ public class Ponto {
 		this.setAltitude();
 	}
 	
+	public Ponto() {}
+	
 	public static Ponto informatLocal(String local) throws  StatusInvalidoException{
 		String localParaURL = local.replaceAll(" ", "%20");
 		Client client = ClientBuilder.newClient();
