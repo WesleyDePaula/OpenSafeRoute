@@ -12,7 +12,11 @@ import javax.persistence.OneToMany;
 
 import modelo.entidade.formulario.Formulario;
 import modelo.entidade.mapa.Ponto;
+import modelo.entidade.mapa.PontoAvaliado;
 import modelo.entidade.mapa.PontoFavorito;
+import modelo.enumeracao.mapa.Estrelas;
+import modelo.enumeracao.mapa.NivelBloqueio;
+import modelo.enumeracao.mapa.Ocorrencia;
 import modelo.excecao.mapa.StatusInvalidoException;
 import modelo.excecao.usuario.EmailInvalidoException;
 import modelo.excecao.usuario.SenhaPequenaException;
@@ -140,9 +144,21 @@ public class UsuarioCadastrado extends Usuario implements Serializable {
 		return isEmailValid;
 	}
 
-	public Formulario avaliar(Formulario avaliacao) {
-		return avaliacao;
+	public void avaliacao(Ocorrencia ocorrencia, Estrelas nivelEstrutura, Estrelas nivelIluminacao, NivelBloqueio bloqueioRuas,
+			Estrelas NivelTransito, String comentario, Ponto ponto) throws NullPointerException, StatusInvalidoException {
+		
+		Formulario formlario = new Formulario( ocorrencia,  nivelEstrutura,  nivelIluminacao,  bloqueioRuas,
+				 NivelTransito,  comentario);
+		
+		if(ponto.getClass().equals("PontoAvaliado") ) {
+			((PontoAvaliado) ponto).addAvaliacao(formlario);
+		}
+	
+		else if (ponto.getClass().equals("Ponto") ) {
+			PontoAvaliado.CriarPonto(ponto, formlario);
+		}
 	}
+
 
 	public void favoritarENomear(Ponto ponto, String nomePonto) throws StatusInvalidoException {
 		PontoFavorito.favoritarPontoENomear(ponto, nomePonto);
