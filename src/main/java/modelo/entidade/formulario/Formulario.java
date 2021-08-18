@@ -69,7 +69,8 @@ public class Formulario implements Serializable {
 	}
 
 	public Formulario(Ocorrencia ocorrencia, Estrelas nivelEstrutura, Estrelas nivelIluminacao,
-			NivelBloqueio bloqueioRuas, Estrelas NivelTransito, String comentario) {
+			NivelBloqueio bloqueioRuas, Estrelas NivelTransito, String comentario, PontoAvaliado idPontoAvaliado,
+			UsuarioCadastrado idUsuario) {
 
 		setOcorrencia(ocorrencia);
 		setNivelEstrutura(nivelEstrutura);
@@ -78,11 +79,14 @@ public class Formulario implements Serializable {
 		setNivelTransito(NivelTransito);
 		setComentario(comentario);
 		setMedia();
+		setIdPontoAvaliado(idPontoAvaliado);
+		setIdUsuario(idUsuario);
 
 	}
 
 	public Formulario(int idFormulario, Ocorrencia ocorrencia, Estrelas nivelEstrutura, Estrelas nivelIluminacao,
-			NivelBloqueio bloqueioRuas, Estrelas NivelTransito, String comentario) {
+			NivelBloqueio bloqueioRuas, Estrelas NivelTransito, String comentario, PontoAvaliado idPontoAvaliado,
+			UsuarioCadastrado idUsuario) {
 
 		setIdFormulario(idFormulario);
 		setOcorrencia(ocorrencia);
@@ -92,6 +96,8 @@ public class Formulario implements Serializable {
 		setNivelTransito(NivelTransito);
 		setComentario(comentario);
 		setMedia();
+		setIdPontoAvaliado(idPontoAvaliado);
+		setIdUsuario(idUsuario);
 
 	}
 

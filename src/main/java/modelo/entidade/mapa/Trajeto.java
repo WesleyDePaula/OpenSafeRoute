@@ -2,6 +2,10 @@ package modelo.entidade.mapa;
 
 import java.util.ArrayList;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -15,9 +19,24 @@ import modelo.excecao.mapa.StatusInvalidoException;
 
 public class Trajeto {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id_trajeto")
+	private int idTrajeto;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id_partida_trajeto")
 	private Ponto inicio;
+	
+	@Column(name = "pontos_trajeto" ) //FALTA FAZER O TIPO DO ATRIBUTO
 	private LineString pontos;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id_chegada_trajeto")
 	private Ponto chegada;
+	
 	private MeioDeTransporte transporteUsado;
 
 	public Trajeto(String inicio, String chegada,MeioDeTransporte transporteUsado) throws StatusInvalidoException {
