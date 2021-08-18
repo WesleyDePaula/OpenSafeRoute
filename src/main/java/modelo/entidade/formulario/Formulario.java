@@ -1,20 +1,57 @@
 package modelo.entidade.formulario;
 
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import modelo.enumeracao.mapa.Estrelas;
 import modelo.enumeracao.mapa.NivelBloqueio;
 import modelo.enumeracao.mapa.Ocorrencia;
 
-public class Formulario {
 
+@Entity
+@Table(name = "Formulario")
+public class Formulario implements Serializable {
+
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTYTY)
+	@Column(name = "id_formulario")
 	private int idFormulario;
+	
+	@Column(name "media_formulario", scale = 2, precision = 1  , nullable = false, unique = true )
 	private double media;
+	
+	@Column (name = "ocorrencia_Formulario", nullable = false, unique = false )
+	@Enumerated(EnumType.STRING)
 	private Ocorrencia ocorrencia;
+	
+	@Column (name = "nivel_estrutura_Formulario", nullable = false, unique = false )
+	@Enumerated(EnumType.STRING)
 	private Estrelas nivelEstrutura;
+	
+	@Column (name = "nivel_Iluminacao_Formulario", nullable = false, unique = false)
+	@Enumerated(EnumType.STRING)
 	private Estrelas nivelIluminacao;
+	
+	@Column (name = "bloqueio_Ruas_Formulario", nullable = false, unique = false
+	@Enumerated(EnumType.STRING)		
 	private NivelBloqueio bloqueioRuas;
+	
+	@Column (name = "nivel_Transito_Formulario", nullable = false, unique = false)
+	@Enumerated(EnumType.STRING)
 	private Estrelas NivelTransito;
+	
+	
+	@Column (name = "comentario_Formulario", length = 300, nullable = true, unique = true  )
 	private String comentario;
+	
+	
 
+	public Formulario () {}
+	
 	public Formulario(Ocorrencia ocorrencia, Estrelas nivelEstrutura, Estrelas nivelIluminacao, NivelBloqueio bloqueioRuas,
 			Estrelas NivelTransito, String comentario) {
 
