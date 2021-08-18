@@ -1,5 +1,12 @@
 package modelo.entidade.mapa;
 
+import java.util.ArrayList;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.Response;
+
 import org.geojson.LineString;
 
 import modelo.enumeracao.mapa.MeioDeTransporte;
@@ -35,14 +42,14 @@ public class Trajeto {
 	}
 
 	public void setPontos() {
-//		Client client = ClientBuilder.newClient();
-//		Entity<String> payload = Entity.json("{\"coordinates\":["","",""],\"elevation\":\"true\",\"extra_info\":[\"roadaccessrestrictions\"]}");
-//		Response response = client.target("https://api.openrouteservice.org/v2/directions/"+getTransporteUsado().getDescricao()+"/geojson")
-//		  .request()
-//		  .header("Authorization", "5b3ce3597851110001cf624839b64a140f534a82a4750d447a4df110")
-//		  .header("Accept", "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8")
-//		  .header("Content-Type", "application/json; charset=utf-8")
-//		  .post(payload);
+		Client client = ClientBuilder.newClient();
+		Entity<String> payload = Entity.json("{\"coordinates\":["+getInicio().TransformarVetorEmString()+","+getChegada().TransformarVetorEmString()+"],\"elevation\":\"true\",\"extra_info\":[\"roadaccessrestrictions\"]}");
+		Response response = client.target("https://api.openrouteservice.org/v2/directions/"+getTransporteUsado().getDescricao()+"/geojson")
+		  .request()
+		  .header("Authorization", "5b3ce3597851110001cf624839b64a140f534a82a4750d447a4df110")
+		  .header("Accept", "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8")
+		  .header("Content-Type", "application/json; charset=utf-8")
+		  .post(payload);
 
 		// Tratar GeoJSON
 
@@ -64,16 +71,39 @@ public class Trajeto {
 		this.transporteUsado = transporteUsado;
 	}
 
-	public String[][] gerarLinhaParaDefinirTrajeto() {
-//		ArrayList<ArrayList<String>> linhaDePontos = new ArrayList<ArrayList<String>>();
-//		Scanner sc = new Scanner(System.in);
-//
-//		System.out.print("Inicio: ");
-//		String local = sc.next();
-//		linhaDePontos.add(this.setInicio(local));
+	private ArrayList<PontoAvaliado> evitarPontos (ArrayList<PontoAvaliado> pontos){
+		ArrayList<PontoAvaliado> evitar = new ArrayList<>();
+		
+		for (int nota = 10; nota >= 0; nota--){
 
-		return null;
+			for (int i = 1; i < pontos.size(); i++){
+				if (pontos.get(i).getMediaDeAvaliacao() < nota){
+					evitar.add(pontos.get(i));
+				}
+			}
 
+			try {
+				
+				Client client = ClientBuilder.newClient();
+				Entity<String> payload = Entity.json("{\"coordinates\":["+getInicio().TransformarVetorEmString()+","+getChegada().TransformarVetorEmString()+"],\"elevation\":\"true\",\"extra_info\":[\"roadaccessrestrictions\"]}");
+				Response response = client.target("https://api.openrouteservice.org/v2/directions/"+getTransporteUsado().getDescricao()+"/geojson")
+				.request()
+				.header("Authorization", "5b3ce3597851110001cf624839b64a140f534a82a4750d447a4df110")
+				.header("Accept", "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8")
+				.header("Content-Type", "application/json; charset=utf-8")
+				.post(payload);
+
+				//evitar Pontos na varavel evitar 
+
+				if (response.getStatus() != 200) {
+					throw new StatusInvalidoException("Ocoreu um erro no requrimento da API");
+				}
+
+			} catch (StatusInvalidoException e) {
+				evitar.removeAll(evitar);
+			}
+		}
+		return evitar;
 	}
 
 }
