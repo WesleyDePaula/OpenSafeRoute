@@ -6,4 +6,6 @@ public interface UsuarioDAO {
 	
 	void cadastrarUsuario(UsuarioCadastrado usuario);
 	
+	void deletarUsuario(UsuarioCadastrado usuario);
+	
 }
