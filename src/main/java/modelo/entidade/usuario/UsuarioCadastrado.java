@@ -9,6 +9,7 @@ import modelo.entidade.mapa.Ponto;
 import modelo.entidade.mapa.PontoAvaliado;
 import modelo.entidade.mapa.PontoFavorito;
 import modelo.enumeracao.mapa.Estrelas;
+import modelo.enumeracao.mapa.NivelBloqueio;
 import modelo.enumeracao.mapa.Ocorrencia;
 import modelo.excecao.mapa.StatusInvalidoException;
 import modelo.excecao.usuario.EmailInvalidoException;
@@ -121,18 +122,19 @@ public class UsuarioCadastrado extends Usuario {
 	}
 
 	public void avaliacao(Ocorrencia ocorrencia, Estrelas nivelEstrutura, Estrelas nivelIluminacao, NivelBloqueio bloqueioRuas,
-			Estrelas NivelTransito, String comentario, Ponto ponto) {
+			Estrelas NivelTransito, String comentario, Ponto ponto) throws NullPointerException, StatusInvalidoException {
 		
 		Formulario formlario = new Formulario( ocorrencia,  nivelEstrutura,  nivelIluminacao,  bloqueioRuas,
 				 NivelTransito,  comentario);
 		
-		if(ponto.getClass() == "PontoAvaliado") {
-			ponto.addAvaliacao(formlario);
+		if(ponto.getClass().equals("PontoAvaliado") ) {
+			((PontoAvaliado) ponto).addAvaliacao(formlario);
 		}
 	
-		else if (ponto.getClass() == "Ponto" ) {
-			PontoAvaliado.CriarPonto(ponto, formulario);
+		else if (ponto.getClass().equals("Ponto") ) {
+			PontoAvaliado.CriarPonto(ponto, formlario);
 		}
+	}
 
 
 	public void favoritarENomear(Ponto ponto, String nomePonto) throws StatusInvalidoException {
