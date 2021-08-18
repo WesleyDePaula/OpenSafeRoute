@@ -25,19 +25,20 @@ public class UsuarioCadastrado extends Usuario implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_Usuario",nullable = false)
+	@Column(name = "id_usuario",nullable = false)
 	private int idUsuario;
 	
-	@Column(name = "nome_Usuario", length = 45, nullable = false, unique = true)
+	@Column(name = "nome_usuario", length = 45, nullable = false, unique = true)
 	private String nome;
 	
-	@Column(name = "Senha", length = 45, nullable = false)
+	@Column(name = "senha_usuario", length = 45, nullable = false)
 	private String senha;
 	
-	@Column(name = "email", length = 45, nullable = false, unique = true)
+	@Column(name = "email_usuario", length = 45, nullable = false, unique = true)
 	private String email;
 	
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "Usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "id_usuario")
 	private List<PontoFavorito> favoritos;
 	
 	public UsuarioCadastrado() {}
