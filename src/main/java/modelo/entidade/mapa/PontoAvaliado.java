@@ -148,5 +148,10 @@ public class PontoAvaliado extends Ponto {
 		}
 		this.nivelDeCriminalidade = soma / getAvaliacoes().size();
 	}
+	public static PontoAvaliado CriarPonto(Ponto ponto, Formulario avaliacao) throws NullPointerException, StatusInvalidoException {
 
+		PontoAvaliado pontoavaliado = new PontoAvaliado(ponto, avaliacao);
+
+		return pontoavaliado;
+	}
 }
