@@ -27,6 +27,7 @@ import modelo.excecao.mapa.StatusInvalidoException;
 import modelo.excecao.usuario.EmailInvalidoException;
 import modelo.excecao.usuario.SenhaPequenaException;
 import modelo.excecao.usuario.StringVaziaException;
+
 @Entity
 @Table(name = "UsuarioCadastrado")
 public class UsuarioCadastrado extends Usuario implements Serializable {
