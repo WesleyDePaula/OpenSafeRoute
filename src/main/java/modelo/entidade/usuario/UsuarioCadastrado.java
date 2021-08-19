@@ -1,14 +1,20 @@
 package modelo.entidade.usuario;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import modelo.entidade.formulario.Formulario;
 import modelo.entidade.mapa.Ponto;
@@ -17,6 +23,7 @@ import modelo.excecao.mapa.StatusInvalidoException;
 import modelo.excecao.usuario.EmailInvalidoException;
 import modelo.excecao.usuario.SenhaPequenaException;
 import modelo.excecao.usuario.StringVaziaException;
+
 @Entity
 @Table(name = "UsuarioCadastrado")
 public class UsuarioCadastrado extends Usuario implements Serializable {
