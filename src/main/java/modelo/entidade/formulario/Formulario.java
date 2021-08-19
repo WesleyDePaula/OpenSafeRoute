@@ -4,56 +4,72 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+import modelo.entidade.mapa.PontoAvaliado;
+import modelo.entidade.usuario.UsuarioCadastrado;
 import modelo.enumeracao.mapa.Estrelas;
 import modelo.enumeracao.mapa.NivelBloqueio;
 import modelo.enumeracao.mapa.Ocorrencia;
-
 
 @Entity
 @Table(name = "Formulario")
 public class Formulario implements Serializable {
 
-	
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTYTY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_formulario")
 	private int idFormulario;
-	
-	@Column(name "media_formulario", scale = 2, precision = 1  , nullable = false, unique = true )
+
+	@Column(name = "media_formulario", scale = 2, precision = 1, nullable = false, unique = false)
 	private double media;
-	
-	@Column (name = "ocorrencia_Formulario", nullable = false, unique = false )
+
+	@Column(name = "ocorrencia_Formulario", nullable = false, unique = false)
 	@Enumerated(EnumType.STRING)
 	private Ocorrencia ocorrencia;
-	
-	@Column (name = "nivel_estrutura_Formulario", nullable = false, unique = false )
+
+	@Column(name = "nivel_estrutura_Formulario", nullable = false, unique = false)
 	@Enumerated(EnumType.STRING)
 	private Estrelas nivelEstrutura;
-	
-	@Column (name = "nivel_Iluminacao_Formulario", nullable = false, unique = false)
+
+	@Column(name = "nivel_Iluminacao_Formulario", nullable = false, unique = false)
 	@Enumerated(EnumType.STRING)
 	private Estrelas nivelIluminacao;
-	
-	@Column (name = "bloqueio_Ruas_Formulario", nullable = false, unique = false
-	@Enumerated(EnumType.STRING)		
+
+	@Column(name = "bloqueio_Ruas_Formulario", nullable = false, unique = false)
+	@Enumerated(EnumType.STRING)
 	private NivelBloqueio bloqueioRuas;
-	
-	@Column (name = "nivel_Transito_Formulario", nullable = false, unique = false)
+
+	@Column(name = "nivel_Transito_Formulario", nullable = false, unique = false)
 	@Enumerated(EnumType.STRING)
 	private Estrelas NivelTransito;
-	
-	
-	@Column (name = "comentario_Formulario", length = 300, nullable = true, unique = true  )
-	private String comentario;
-	
-	
 
-	public Formulario () {}
-	
-	public Formulario(Ocorrencia ocorrencia, Estrelas nivelEstrutura, Estrelas nivelIluminacao, NivelBloqueio bloqueioRuas,
-			Estrelas NivelTransito, String comentario) {
+	@Column(name = "comentario_Formulario", length = 300, nullable = true, unique = true)
+	private String comentario;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_ponto_avaliado")
+	private PontoAvaliado idPontoAvaliado;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_usuario")
+	private UsuarioCadastrado idUsuario;
+
+	public Formulario() {
+	}
+
+	public Formulario(Ocorrencia ocorrencia, Estrelas nivelEstrutura, Estrelas nivelIluminacao,
+			NivelBloqueio bloqueioRuas, Estrelas NivelTransito, String comentario) {
 
 		setOcorrencia(ocorrencia);
 		setNivelEstrutura(nivelEstrutura);
@@ -64,9 +80,9 @@ public class Formulario implements Serializable {
 		setMedia();
 
 	}
-	
-	public Formulario(int idFormulario, Ocorrencia ocorrencia, Estrelas nivelEstrutura, Estrelas nivelIluminacao, NivelBloqueio bloqueioRuas,
-			Estrelas NivelTransito, String comentario) {
+
+	public Formulario(int idFormulario, Ocorrencia ocorrencia, Estrelas nivelEstrutura, Estrelas nivelIluminacao,
+			NivelBloqueio bloqueioRuas, Estrelas NivelTransito, String comentario) {
 
 		setIdFormulario(idFormulario);
 		setOcorrencia(ocorrencia);
@@ -78,11 +94,11 @@ public class Formulario implements Serializable {
 		setMedia();
 
 	}
-	
+
 	public int getIdFormulario() {
 		return idFormulario;
 	}
-	
+
 	public void setIdFormulario(int idFormulario) {
 		this.idFormulario = idFormulario;
 	}
@@ -139,9 +155,25 @@ public class Formulario implements Serializable {
 		return media;
 	}
 
+	public PontoAvaliado getIdPontoAvaliado() {
+		return idPontoAvaliado;
+	}
+
+	public void setIdPontoAvaliado(PontoAvaliado idPontoAvaliado) {
+		this.idPontoAvaliado = idPontoAvaliado;
+	}
+
+	public UsuarioCadastrado getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(UsuarioCadastrado idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
 	private void setMedia() {
-		this.media = (((getNivelEstrutura().getPeso() + getNivelTransito().getPeso() + getNivelIluminacao().getPeso()) / 3)
-				- getOcorrencia().getPeso());
+		this.media = (((getNivelEstrutura().getPeso() + getNivelTransito().getPeso() + getNivelIluminacao().getPeso())
+				/ 3) - getOcorrencia().getPeso());
 	}
 
 }
