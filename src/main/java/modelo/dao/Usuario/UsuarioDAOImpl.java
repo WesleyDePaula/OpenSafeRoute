@@ -5,89 +5,91 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+
 import modelo.entidade.usuario.UsuarioCadastrado;
 
 public class UsuarioDAOImpl implements UsuarioDAO {
 
-	private Connection conectarBanco() throws SQLException {
-		return DriverManager.getConnection("jdbc:mysql://localhost/opensaferoutes?useTimezone=true&serverTimezone=UTC&user=root&password=root");
+	private SessionFactory conectarBanco() throws SQLException {
+
+		Configuration configuracao = new Configuration();
+
+		configuracao.addAnnotatedClass(modelo.entidade.formulario.Formulario.class);
+		configuracao.addAnnotatedClass(modelo.entidade.mapa.Ponto.class);
+		configuracao.addAnnotatedClass(modelo.entidade.mapa.PontoAvaliado.class);
+		configuracao.addAnnotatedClass(modelo.entidade.mapa.PontoFavorito.class);
+		configuracao.addAnnotatedClass(modelo.entidade.mapa.Trajeto.class);
+		configuracao.addAnnotatedClass(modelo.entidade.usuario.UsuarioCadastrado.class);
+
+		configuracao.configure("hibernate.cfg.xml");
+
+		ServiceRegistry servico = new StandardServiceRegistryBuilder().applySettings(configuracao.getProperties())
+				.build();
+
+		SessionFactory fabricaSessao = configuracao.buildSessionFactory(servico);
+
+		return fabricaSessao;
 	}
 
 	public void cadastrarUsuario(UsuarioCadastrado usuario) {
-		
-		Connection conexao = null;
-		PreparedStatement insert = null;
+
+		Session sessao = null;
 
 		try {
 
-			conexao = conectarBanco();
-			insert = conexao.prepareStatement(
-					"INSERT INTO usuario (nome_usuario, senha_usuario, email_usuario) VALUES (?,?,?)");
+			sessao = conectarBanco().openSession();
+			sessao.beginTransaction();
 
-			insert.setString(1, usuario.getNome());
-			insert.setString(2, usuario.getSenha());
-			insert.setString(3, usuario.getEmail());
+			sessao.save(usuario);
 
-			insert.execute();
+			sessao.getTransaction().commit();
 
-		} catch (SQLException erro) {
+		} catch (Exception erro) {
 			erro.printStackTrace();
-		}
 
-		finally {
-
-			try {
-
-				if (insert != null)
-					insert.close();
-
-				if (conexao != null)
-					conexao.close();
-
-			} catch (SQLException erro) {
-
-				erro.printStackTrace();
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
 			}
 
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
 		}
-		
 	}
 
 	public void deletarUsuario(UsuarioCadastrado usuario) {
-		
-		Connection conexao = null;
-		PreparedStatement delete = null;
-		
+
+		Session sessao = null;
+
 		try {
-			
-			conexao = conectarBanco();
-			delete = conexao.prepareStatement("DELETE FROM usuario WHERE (id_usuario = ?)");
-			
-			delete.setInt(1, usuario.getIdUsuario());
-			
-			delete.execute();
-			
-		} catch (SQLException erro) {
+
+			sessao = conectarBanco().openSession();
+			sessao.beginTransaction();
+
+			sessao.delete(usuario);
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception erro) {
 			erro.printStackTrace();
-		}
-		
-		finally {
-			
-			try {
 
-				if (delete != null)
-					delete.close();
-
-				if (conexao != null)
-					conexao.close();
-
-			} catch (SQLException erro) {
-
-				erro.printStackTrace();
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
 			}
-			
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
 		}
-		
 	}
-	
+
 }

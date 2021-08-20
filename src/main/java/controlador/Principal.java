@@ -21,15 +21,6 @@ public class Principal {
 
 		System.out.println(usuario.getIdUsuario());
 		
-		System.out.println("Quer deletar um usuario? [1=S][2=N]");
-		int resp = leitor.nextInt();
-
-		if (resp == 1) {
-
-			dao.deletarUsuario(usuario);
-			System.out.println("Deletado");
-			
-		}
 
 	}
 
