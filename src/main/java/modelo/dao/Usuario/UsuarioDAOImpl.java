@@ -20,7 +20,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		Configuration configuracao = new Configuration();
 
 		configuracao.addAnnotatedClass(modelo.entidade.formulario.Formulario.class);
-		configuracao.addAnnotatedClass(modelo.entidade.mapa.Ponto.class);
 		configuracao.addAnnotatedClass(modelo.entidade.mapa.PontoAvaliado.class);
 		configuracao.addAnnotatedClass(modelo.entidade.mapa.PontoFavorito.class);
 		configuracao.addAnnotatedClass(modelo.entidade.mapa.Trajeto.class);
