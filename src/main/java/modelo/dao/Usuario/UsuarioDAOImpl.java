@@ -28,8 +28,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 		configuracao.configure("hibernate.cfg.xml");
 
-		ServiceRegistry servico = new StandardServiceRegistryBuilder().applySettings(configuracao.getProperties())
-				.build();
+		ServiceRegistry servico = new StandardServiceRegistryBuilder().applySettings(configuracao.getProperties()).build();
 
 		SessionFactory fabricaSessao = configuracao.buildSessionFactory(servico);
 
