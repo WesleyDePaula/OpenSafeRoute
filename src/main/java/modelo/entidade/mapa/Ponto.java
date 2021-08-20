@@ -8,7 +8,13 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.geojson.FeatureCollection;
+import org.geojson.GeoJsonObject;
 import org.geojson.Point;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import modelo.excecao.mapa.StatusInvalidoException;
 
@@ -25,7 +31,7 @@ public class Ponto {
 	
 	public Ponto() {}
 	
-	public static Ponto informatLocal(String local) throws  StatusInvalidoException{
+	public static Ponto informatLocal(String local) throws  StatusInvalidoException, JsonMappingException, JsonProcessingException{
 		String localParaURL = local.replaceAll(" ", "%20");
 		Client client = ClientBuilder.newClient();
 		Response response = client.target(
@@ -34,6 +40,11 @@ public class Ponto {
 				.request(MediaType.TEXT_PLAIN_TYPE)
 				.header("Accept", "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8")
 				.get();
+		
+		GeoJsonObject object = new ObjectMapper() .readValue( response.readEntity(String.class) , GeoJsonObject.class);
+
+		((FeatureCollection)object).getFeatures().get(0).getGeometry();
+		
 		
 		if (response.getStatus() == 4001) {
 			throw new StatusInvalidoException("Erro de valor no paremetro");
