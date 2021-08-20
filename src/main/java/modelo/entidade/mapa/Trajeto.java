@@ -24,7 +24,6 @@ public class Trajeto {
 	@Column(name = "id_trajeto")
 	private int idTrajeto;
 	
-	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_partida_trajeto")
 	private Ponto inicio;
@@ -32,7 +31,6 @@ public class Trajeto {
 	@Column(name = "pontos_trajeto" ) //FALTA FAZER O TIPO DO ATRIBUTO
 	private LineString pontos;
 	
-	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_chegada_trajeto")
 	private Ponto chegada;
