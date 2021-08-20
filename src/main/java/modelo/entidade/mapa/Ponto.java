@@ -20,18 +20,20 @@ import modelo.excecao.mapa.StatusInvalidoException;
 
 public class Ponto {
 
-	private int idPonto; 
+	private int idPonto;
 	private Point LongLatAlt;
 
-	public Ponto(double latitude, double longitude) throws StatusInvalidoException {
+	public Ponto(double latitude, double longitude) throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
 		this.setLatitude(latitude);
 		this.setLongitude(longitude);
 		this.setAltitude();
 	}
-	
-	public Ponto() {}
-	
-	public static Ponto informatLocal(String local) throws  StatusInvalidoException, JsonMappingException, JsonProcessingException{
+
+	public Ponto() {
+	}
+
+	public static Ponto informatLocal(String local)
+			throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
 		String localParaURL = local.replaceAll(" ", "%20");
 		Client client = ClientBuilder.newClient();
 		Response response = client.target(
@@ -40,31 +42,28 @@ public class Ponto {
 				.request(MediaType.TEXT_PLAIN_TYPE)
 				.header("Accept", "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8")
 				.get();
-		
-		GeoJsonObject object = new ObjectMapper() .readValue( response.readEntity(String.class) , GeoJsonObject.class);
 
-		((FeatureCollection)object).getFeatures().get(0).getGeometry();
-		
-		
 		if (response.getStatus() == 4001) {
 			throw new StatusInvalidoException("Erro de valor no paremetro");
-		}
-		else if (response.getStatus() == 4002) {
+		} else if (response.getStatus() == 4002) {
 			throw new StatusInvalidoException("CabeÃ§alhos de HTTP errados");
-		}
-		else if (response.getStatus() == 4003) {
+		} else if (response.getStatus() == 4003) {
 			throw new StatusInvalidoException("Problemas ao prover a geometria");
-		}
-		else if (response.getStatus() == 4004) {
+		} else if (response.getStatus() == 4004) {
 			throw new StatusInvalidoException("Excedeu o nÃºmero de vÃ©rtices permitidos");
-		}
-		else if (response.getStatus() != 200) {
+		} else if (response.getStatus() != 200) {
 			throw new StatusInvalidoException("Ocoreu um erro no requrimento da API");
 		}
-//		 tratar para devolover latitude e longitude
-//		 return Ponto localTratado = new Ponto(latitude, longitude);
+
+		GeoJsonObject object = new ObjectMapper().readValue(response.readEntity(String.class), GeoJsonObject.class);
+
+		Ponto pontoProvisorio = new Ponto();
+
+		pontoProvisorio.setLongLatAlt((Point) ((FeatureCollection) object).getFeatures().get(0).getGeometry());
+
+		Ponto ponto = new Ponto(pontoProvisorio.getLatitude(),pontoProvisorio.getLongitude());
 		
-		return new Ponto(0,0);
+		return ponto;
 	}
 
 	public Point getLongLatAlt() {
@@ -79,43 +78,44 @@ public class Ponto {
 		return (int) getLongLatAlt().getCoordinates().getAltitude();
 	}
 
-	private void setAltitude() throws  StatusInvalidoException {
+	private void setAltitude() throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
 
 		Client client = ClientBuilder.newClient();
-		Entity<String> payload = Entity.json("{\"format_in\":\"point\",\"geometry\":"+this.TransformarVetorEmString()+"}");
-		Response response = client.target("https://api.openrouteservice.org/elevation/point")
-		  .request()
-		  .header("Authorization", "5b3ce3597851110001cf624839b64a140f534a82a4750d447a4df110")
-		  .header("Accept", "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8")
-		  .header("Content-Type", "application/json; charset=utf-8")
-		  .post(payload);
-		
+		Entity<String> payload = Entity
+				.json("{\"format_in\":\"point\",\"geometry\":" + this.TransformarVetorEmString() + "}");
+		Response response = client.target("https://api.openrouteservice.org/elevation/point").request()
+				.header("Authorization", "5b3ce3597851110001cf624839b64a140f534a82a4750d447a4df110")
+				.header("Accept", "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8")
+				.header("Content-Type", "application/json; charset=utf-8").post(payload);
+
 		if (response.getStatus() == 4001) {
 			throw new StatusInvalidoException("Erro de valor no paremetro");
-		}
-		else if (response.getStatus() == 4002) {
+		} else if (response.getStatus() == 4002) {
 			throw new StatusInvalidoException("CabeÃ§alhos de HTTP errados");
-		}
-		else if (response.getStatus() == 4003) {
+		} else if (response.getStatus() == 4003) {
 			throw new StatusInvalidoException("Problemas ao prover a geometria");
-		}
-		else if (response.getStatus() == 4004) {
+		} else if (response.getStatus() == 4004) {
 			throw new StatusInvalidoException("Excedeu o nÃºmero de vÃ©rtices permitidos");
-		}
-		else if (response.getStatus() != 200) {
+		} else if (response.getStatus() != 200) {
 			throw new StatusInvalidoException("Ocoreu um erro no requrimento da API");
 		}
-		
-		//tratamento GeoJSON
-		
-		this.getLongLatAlt().getCoordinates().setAltitude(0);
-		
+
+		GeoJsonObject object = new ObjectMapper().readValue(response.readEntity(String.class), GeoJsonObject.class);
+
+		((FeatureCollection) object).getFeatures().get(0).getGeometry();
+
+		Ponto ponto = new Ponto();
+
+		ponto.setLongLatAlt((Point) ((FeatureCollection) object).getFeatures().get(0).getGeometry());
+
+		this.getLongLatAlt().getCoordinates().setAltitude(ponto.getAltitude());
+
 	}
-	
+
 	public void setId(int id) {
 		this.idPonto = id;
 	}
-	
+
 	public int getId() {
 		return idPonto;
 	}
@@ -129,7 +129,8 @@ public class Ponto {
 	}
 
 	private void setLongitude(double longitude) {
-		this.getLongLatAlt().getCoordinates().setLongitude(longitude);;
+		this.getLongLatAlt().getCoordinates().setLongitude(longitude);
+		;
 	}
 
 	public double getLongitude() {
@@ -147,14 +148,14 @@ public class Ponto {
 		ArrayList<Double> pontoVetro = new ArrayList<Double>(3);
 		pontoVetro.add(this.getLongitude());
 		pontoVetro.add(this.getLatitude());
-		pontoVetro.add((double)this.getAltitude());
+		pontoVetro.add((double) this.getAltitude());
 		return pontoVetro;
 	}
-	
+
 	public String TransformarVetorEmString() {
 		return transformarPontoEmVetor().toString();
 	}
-	
+
 	public String TransformarVetorComElevacaoEmString() {
 		return transformarPontoEmVetorComElevacao().toString();
 	}
