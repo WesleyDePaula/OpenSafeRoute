@@ -57,11 +57,9 @@ public class Ponto {
 
 		GeoJsonObject object = new ObjectMapper().readValue(response.readEntity(String.class), GeoJsonObject.class);
 
-		Ponto pontoProvisorio = new Ponto();
+		Ponto ponto = new Ponto();
 
-		pontoProvisorio.setLongLatAlt((Point) ((FeatureCollection) object).getFeatures().get(0).getGeometry());
-
-		Ponto ponto = new Ponto(pontoProvisorio.getLatitude(),pontoProvisorio.getLongitude());
+		ponto.setLongLatAlt((Point) ((FeatureCollection) object).getFeatures().get(0).getGeometry());
 		
 		return ponto;
 	}
