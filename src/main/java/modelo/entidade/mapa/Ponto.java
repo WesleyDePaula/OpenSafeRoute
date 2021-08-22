@@ -76,7 +76,7 @@ public class Ponto {
 		return (int) getLongLatAlt().getCoordinates().getAltitude();
 	}
 
-	private void setAltitude() throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
+	public void setAltitude() throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
 
 		Client client = ClientBuilder.newClient();
 		Entity<String> payload = Entity
