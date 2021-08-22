@@ -1,5 +1,6 @@
 package modelo.entidade.mapa;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.persistence.Column;
@@ -11,7 +12,14 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.geojson.FeatureCollection;
+import org.geojson.GeoJsonObject;
 import org.geojson.LineString;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import modelo.enumeracao.mapa.MeioDeTransporte;
 import modelo.excecao.mapa.StatusInvalidoException;
@@ -37,7 +45,7 @@ public class Trajeto {
 	
 	private MeioDeTransporte transporteUsado;
 
-	public Trajeto(String inicio, String chegada,MeioDeTransporte transporteUsado) throws StatusInvalidoException {
+	public Trajeto(String inicio, String chegada,MeioDeTransporte transporteUsado) throws StatusInvalidoException, JsonParseException, org.codehaus.jackson.map.JsonMappingException, IOException {
 		this.setInicio(inicio);
 		this.setChegada(chegada);
 		this.setTransporteUsado(transporteUsado);
@@ -50,7 +58,7 @@ public class Trajeto {
 		return inicio;
 	}
 
-	public void setInicio(String inicio) throws StatusInvalidoException {
+	public void setInicio(String inicio) throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
 		this.inicio = Ponto.informatLocal(inicio);
 	}
 
@@ -58,7 +66,7 @@ public class Trajeto {
 		return pontos;
 	}
 
-	public void setPontos() {
+	public void setPontos() throws JsonParseException, org.codehaus.jackson.map.JsonMappingException, IOException {
 		Client client = ClientBuilder.newClient();
 		Entity<String> payload = Entity.json("{\"coordinates\":["+getInicio().TransformarVetorEmString()+","+getChegada().TransformarVetorEmString()+"],\"elevation\":\"true\",\"extra_info\":[\"roadaccessrestrictions\"]}");
 		Response response = client.target("https://api.openrouteservice.org/v2/directions/"+getTransporteUsado().getDescricao()+"/geojson")
@@ -68,7 +76,8 @@ public class Trajeto {
 		  .header("Content-Type", "application/json; charset=utf-8")
 		  .post(payload);
 
-		// Tratar GeoJSON
+		GeoJsonObject object = new ObjectMapper() .readValue( response.readEntity(String.class) , GeoJsonObject.class);
+		this.pontos = (LineString) ((FeatureCollection) object).getFeatures().get(0).getGeometry();
 
 	}
 
@@ -76,7 +85,7 @@ public class Trajeto {
 		return chegada;
 	}
 
-	public void setChegada(String chegada) throws StatusInvalidoException {
+	public void setChegada(String chegada) throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
 		this.chegada = Ponto.informatLocal(chegada);
 	}
 
