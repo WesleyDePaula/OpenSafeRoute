@@ -89,5 +89,35 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			}
 		}
 	}
+	
+	public void atualizarUsuario(UsuarioCadastrado usuario) {
+		
+		Session sessao = null;
+		
+		try {
+			
+			sessao = conectarBanco().openSession();
+			sessao.beginTransaction();
+			
+			sessao.update(usuario);
+		
+			sessao.getTransaction().commit();
+			
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+		
+	}
 
 }
