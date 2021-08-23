@@ -61,6 +61,10 @@ public class Trajeto {
 	public void setInicio(String inicio) throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
 		this.inicio = Ponto.informatLocal(inicio);
 	}
+	
+	private void setInicio(Ponto inicio) {
+		this.inicio = inicio;
+	}
 
 	public LineString getPontos() {
 		return pontos;
@@ -87,6 +91,10 @@ public class Trajeto {
 
 	public void setChegada(String chegada) throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
 		this.chegada = Ponto.informatLocal(chegada);
+	}
+	
+	private void setChegada(Ponto chegada) {
+		this.chegada = chegada;
 	}
 
 	public MeioDeTransporte getTransporteUsado() {
