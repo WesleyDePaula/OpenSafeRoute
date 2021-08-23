@@ -40,6 +40,7 @@ public class UsuarioCadastrado extends Usuario implements Serializable {
 	@Column(name = "senha_usuario", length = 45, nullable = false)
 	private String senha;
 	
+	
 	@Column(name = "email_usuario", length = 45, nullable = false, unique = true)
 	private String email;
 	
