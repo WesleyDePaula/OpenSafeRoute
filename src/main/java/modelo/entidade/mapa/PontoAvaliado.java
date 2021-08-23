@@ -7,9 +7,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import modelo.entidade.formulario.Formulario;
@@ -21,10 +25,10 @@ import modelo.excecao.mapa.StatusInvalidoException;
 public class PontoAvaliado extends Ponto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_ponto", nullable = false, unique = true, columnDefinition = "UNSIGNED")
+	@Column(name = "id_ponto", nullable = false, unique = true, columnDefinition = "UNSIGNED INT")
 	private int idPontoAvaliado;
 
 	private List<Formulario> avaliacoes;
@@ -32,7 +36,7 @@ public class PontoAvaliado extends Ponto implements Serializable {
 	@Column(name = "nivel_Criminalidade_Ponto_Avaliado", precision = 4, scale = 2, nullable = false)
 	private double nivelDeCriminalidade;
 
-	@Column(name = "nivel_Estrutura_Ponto_Avaliado", nullable = false, columnDefinition = "UNSIGNED")
+	@Column(name = "nivel_Estrutura_Ponto_Avaliado", nullable = false, columnDefinition = "UNSIGNED INT")
 	private int nivelDeEstruturaDaRua;
 
 	@Column(name = "nivel_Iluminacao_Ponto_Avaliado", nullable = false)
@@ -48,14 +52,20 @@ public class PontoAvaliado extends Ponto implements Serializable {
 	@Column(name = "media_Avaliacao_Ponto_Avaliado", nullable = false)
 	private int mediaDeAvaliacao;
 
-	public PontoAvaliado(){}
+	@OneToOne(fetch = FetchType.LAZY)
+	@MapsId
+	@JoinColumn(name = "id_cliente")
+	private Ponto ponto;
+
+	public PontoAvaliado() {
+	}
 
 	public PontoAvaliado(double latitude, double longitude, int idPontoAvaliado, List<Formulario> avaliacoes,
 			double nivelDeCriminalidade, int nivelDeEstruturaDaRua, int nivelDeIluminacao, int nivelDeTransito,
 			NivelBloqueio bloqueio, int mediaDeAvaliacao) throws StatusInvalidoException {
 		super(latitude, longitude);
 		this.setIdPontoAvaliado(idPontoAvaliado);
-		this.avaliacoes = avaliacoes;
+		this.setAvaliacoes(avaliacoes);
 		this.setNivelDeCriminalidade();
 		this.setNivelDeEstruturaDaRua();
 		this.setNivelDeIluminacao();
@@ -69,7 +79,7 @@ public class PontoAvaliado extends Ponto implements Serializable {
 			int nivelDeEstruturaDaRua, int nivelDeIluminacao, int nivelDeTransito, NivelBloqueio bloqueio,
 			int mediaDeAvaliacao) throws StatusInvalidoException {
 		super(latitude, longitude);
-		this.avaliacoes = avaliacoes;
+		this.setAvaliacoes(avaliacoes);
 		this.setNivelDeCriminalidade();
 		this.setNivelDeEstruturaDaRua();
 		this.setNivelDeIluminacao();
@@ -117,6 +127,10 @@ public class PontoAvaliado extends Ponto implements Serializable {
 		return avaliacoes;
 	}
 
+	public void setAvaliacoes(List<Formulario> avaliacoes) {
+		this.avaliacoes = avaliacoes;
+	}
+	
 	public void addAvaliacao(Formulario avaliacao) throws NullPointerException {
 
 		if (avaliacao == null) {
@@ -200,6 +214,15 @@ public class PontoAvaliado extends Ponto implements Serializable {
 
 	public int getNivelDeTransito() {
 		return nivelDeTransito;
+	}
+
+	public Ponto getPonto() {
+		return ponto;
+
+	}
+
+	public void setPonto(Ponto ponto) {
+		this.ponto = ponto;
 	}
 
 	private void setNivelDeTransito() {
