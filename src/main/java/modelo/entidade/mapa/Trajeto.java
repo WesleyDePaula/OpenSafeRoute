@@ -139,14 +139,17 @@ public class Trajeto {
 		this.transporteUsado = transporteUsado;
 	}
 
-	private ArrayList<PontoAvaliado> evitarPontos(ArrayList<PontoAvaliado> pontos) {
-		ArrayList<PontoAvaliado> evitar = new ArrayList<>();
+	private ArrayList<ArrayList<ArrayList<PontoAvaliado>>> evitarPontos(ArrayList<PontoAvaliado> pontos) {
+		ArrayList<ArrayList<ArrayList<PontoAvaliado>>> evitar = new ArrayList<ArrayList<ArrayList<PontoAvaliado>>>();
 
+		int contador = 0;
+		
 		for (int nota = 10; nota >= 0; nota--) {
 
 			for (int i = 1; i < pontos.size(); i++) {
 				if (pontos.get(i).getMediaDeAvaliacao() < nota) {
-					evitar.add(pontos.get(i));
+					evitar.get(contador).get(contador).add(pontos.get(i));
+					contador++;
 				}
 			}
 
@@ -155,7 +158,8 @@ public class Trajeto {
 				Client client = ClientBuilder.newClient();
 				Entity<String> payload = Entity.json("{\"coordinates\":[" + getInicio().TransformarVetorEmString() + ","
 						+ getChegada().TransformarVetorEmString()
-						+ "],\"elevation\":\"true\",\"extra_info\":[\"steepness\",\"waycategory\",\"waytype\",\"tollways\"],\"options\":{\"avoid_polygons\":{\"type\":\"MultiPolygon\",\"coordinates\":"+evitar+"}}");
+						+ "],\"elevation\":\"true\",\"extra_info\":[\"steepness\",\"waycategory\",\"waytype\",\"tollways\"],\"options\":{\"avoid_polygons\":{\"type\":\"MultiPolygon\",\"coordinates\":"
+						+ evitar + "}}");
 				Response response = client
 						.target("https://api.openrouteservice.org/v2/directions/" + getTransporteUsado().getDescricao()
 								+ "/geojson")
@@ -170,7 +174,7 @@ public class Trajeto {
 					throw new StatusInvalidoException("Ocoreu um erro no requrimento da API");
 				}
 
-			} catch (StatusInvalidoException e) {
+			} catch (Exception e) {
 				evitar.removeAll(evitar);
 			}
 		}
