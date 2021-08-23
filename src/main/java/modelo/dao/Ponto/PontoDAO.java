@@ -6,4 +6,6 @@ public interface PontoDAO {
 
 	void adicionarPonto(Ponto ponto);
 	
+	void deletarPonto(Ponto ponto);
+	
 }

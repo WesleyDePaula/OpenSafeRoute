@@ -59,5 +59,34 @@ public class PontoDAOImpl {
 		}
 
 	}
+	
+	public void deletarPonto(Ponto ponto) {
+		
+		Session sessao = null;
+		
+		try {
+			
+			sessao = conectarBanco().openSession();
+			sessao.beginTransaction();
+			
+			sessao.delete(ponto);
+			
+			sessao.getTransaction().commit();
+						
+		} catch (Exception erro) {
+			erro.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+		
+	}
 
 }
