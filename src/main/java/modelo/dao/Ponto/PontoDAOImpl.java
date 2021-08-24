@@ -9,26 +9,14 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import modelo.entidade.mapa.Ponto;
+import modelo.factory.conexao.ConexaoFactory;
 
 public class PontoDAOImpl {
 
-	private SessionFactory conectarBanco() throws SQLException {
-
-		Configuration configuracao = new Configuration();
-
-		configuracao.addAnnotatedClass(modelo.entidade.formulario.Formulario.class);
-		configuracao.addAnnotatedClass(modelo.entidade.mapa.PontoAvaliado.class);
-		configuracao.addAnnotatedClass(modelo.entidade.mapa.PontoFavorito.class);
-		configuracao.addAnnotatedClass(modelo.entidade.mapa.Trajeto.class);
-
-		configuracao.configure("hibernate.cfg.xml");
-
-		ServiceRegistry servico = new StandardServiceRegistryBuilder().applySettings(configuracao.getProperties())
-				.build();
-
-		SessionFactory fabricaSessao = configuracao.buildSessionFactory(servico);
-
-		return fabricaSessao;
+	private ConexaoFactory fabrica;
+	
+	public PontoDAOImpl() {
+		fabrica = new ConexaoFactory();
 	}
 
 	public void adicionarPonto(Ponto ponto) {
@@ -37,7 +25,7 @@ public class PontoDAOImpl {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.save(ponto);
@@ -66,7 +54,7 @@ public class PontoDAOImpl {
 		
 		try {
 			
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 			
 			sessao.delete(ponto);
