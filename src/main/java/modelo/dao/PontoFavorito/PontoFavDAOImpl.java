@@ -42,4 +42,33 @@ public class PontoFavDAOImpl implements PontoFavDAO {
 		
 	}
 	
+	public void deletarPontoFav(PontoFavorito pontoFav) {
+		
+		Session sessao = null;
+		
+		try {
+			
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
+			
+			sessao.delete(pontoFav);
+			
+			sessao.getTransaction().commit();
+			
+		} catch (Exception erro) {
+			erro.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+		
+	}
+	
 }
