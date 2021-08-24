@@ -21,6 +21,7 @@ import org.geojson.LineString;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
+import modelo.consultaAPI.ConsultaTrajeto;
 import modelo.enumeracao.mapa.MeioDeTransporte;
 import modelo.excecao.mapa.StatusInvalidoException;
 
@@ -101,21 +102,8 @@ public class Trajeto {
 		return pontos;
 	}
 
-	public void setPontos() throws JsonParseException, org.codehaus.jackson.map.JsonMappingException, IOException {
-		Client client = ClientBuilder.newClient();
-		Entity<String> payload = Entity.json("{\"coordinates\":[" + getInicio().TransformarVetorEmString() + ","
-				+ getChegada().TransformarVetorEmString()
-				+ "],\"elevation\":\"true");
-		Response response = client
-				.target("https://api.openrouteservice.org/v2/directions/" + getTransporteUsado().getDescricao()
-						+ "/geojson")
-				.request().header("Authorization", "5b3ce3597851110001cf624839b64a140f534a82a4750d447a4df110")
-				.header("Accept", "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8")
-				.header("Content-Type", "application/json; charset=utf-8").post(payload);
-
-		GeoJsonObject object = new ObjectMapper().readValue(response.readEntity(String.class), GeoJsonObject.class);
-		this.pontos = (LineString) ((FeatureCollection) object).getFeatures().get(0).getGeometry();
-
+	public LineString setPontos() throws JsonParseException, org.codehaus.jackson.map.JsonMappingException, IOException{
+		return ConsultaTrajeto.setPontos(inicio, chegada, transporteUsado);
 	}
 
 	public Ponto getChegada() {
