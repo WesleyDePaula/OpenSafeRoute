@@ -80,7 +80,7 @@ public class Ponto {
 
 		Client client = ClientBuilder.newClient();
 		Entity<String> payload = Entity
-				.json("{\"format_in\":\"point\",\"geometry\":" + this.TransformarVetorEmString() + "}");
+				.json("{\"format_in\":\"point\",\"format_out\":\"geojson\",\"dataset\":\"srtm\"\"geometry\":" + this.TransformarVetorEmString() + "}");
 		Response response = client.target("https://api.openrouteservice.org/elevation/point").request()
 				.header("Authorization", "5b3ce3597851110001cf624839b64a140f534a82a4750d447a4df110")
 				.header("Accept", "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8")
