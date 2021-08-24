@@ -105,7 +105,7 @@ public class Trajeto {
 		Client client = ClientBuilder.newClient();
 		Entity<String> payload = Entity.json("{\"coordinates\":[" + getInicio().TransformarVetorEmString() + ","
 				+ getChegada().TransformarVetorEmString()
-				+ "],\"elevation\":\"true\",\"extra_info\":[\"steepness\",\"waycategory\",\"waytype\",\"tollways\"]");
+				+ "],\"elevation\":\"true");
 		Response response = client
 				.target("https://api.openrouteservice.org/v2/directions/" + getTransporteUsado().getDescricao()
 						+ "/geojson")
