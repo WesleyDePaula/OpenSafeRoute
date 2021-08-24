@@ -1,21 +1,41 @@
 package modelo.entidade.mapa;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
+import javax.persistence.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.geojson.Point;
+import org.hibernate.annotations.Type;
 
 import modelo.excecao.mapa.StatusInvalidoException;
 
-public class Ponto {
+@Entity
+@Table(name = "Ponto")
+public class Ponto implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_ponto",nullable = false,unique = true)
 	private int idPonto; 
+	
+	@Column(columnDefinition = "long_lat_ponto")
+	@Type(type = "org.hibernate.spatial.GeometryType")
 	private Point LongLatAlt;
+
+	
+	public Ponto() {}
 
 	public Ponto(double latitude, double longitude) throws StatusInvalidoException {
 		this.setLatitude(latitude);
@@ -23,7 +43,7 @@ public class Ponto {
 		this.setAltitude();
 	}
 	
-	public Ponto() {}
+	
 	
 	public static Ponto informatLocal(String local) throws  StatusInvalidoException{
 		String localParaURL = local.replaceAll(" ", "%20");
