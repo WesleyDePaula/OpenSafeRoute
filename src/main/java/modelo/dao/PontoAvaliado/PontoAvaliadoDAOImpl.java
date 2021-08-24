@@ -14,7 +14,7 @@ public class PontoAvaliadoDAOImpl implements PontoAvaliadoDAO {
 	}
 
 	@Override
-	public void adicionarPontAvaliado(PontoAvaliado pontoAvaliado) {
+	public void adicionarPontoAvaliado(PontoAvaliado pontoAvaliado) {
 		Session sessao = null;
 
 		try {
@@ -43,7 +43,7 @@ public class PontoAvaliadoDAOImpl implements PontoAvaliadoDAO {
 	}
 
 	@Override
-	public void deletarPontAvaliado(PontoAvaliado pontoAvaliado) {
+	public void deletarPontoAvaliado(PontoAvaliado pontoAvaliado) {
 
 		Session sessao = null;
 

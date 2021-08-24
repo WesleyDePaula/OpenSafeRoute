@@ -19,7 +19,7 @@ public class PontoDAOImpl {
 		fabrica = new ConexaoFactory();
 	}
 
-	public void adicionarPonto(Ponto ponto) {
+	public void inserirPonto(Ponto ponto) {
 
 		Session sessao = null;
 

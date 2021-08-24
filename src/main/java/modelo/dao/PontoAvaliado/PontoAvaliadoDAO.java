@@ -4,8 +4,8 @@ import modelo.entidade.mapa.PontoAvaliado;
 
 public interface PontoAvaliadoDAO {
 	
-	void adicionarPontAvaliado(PontoAvaliado pontoAvaliado);
+	void adicionarPontoAvaliado(PontoAvaliado pontoAvaliado);
 	
-	void deletarPontAvaliado(PontoAvaliado pontoAvaliado);
+	void deletarPontoAvaliado(PontoAvaliado pontoAvaliado);
 
 }

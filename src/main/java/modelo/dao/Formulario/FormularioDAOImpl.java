@@ -20,7 +20,7 @@ public class FormularioDAOImpl implements FormularioDAO {
 	}
 
 	@Override
-	public void registrarAvaliacao(Formulario formulario) {
+	public void inserirAvaliacao(Formulario formulario) {
 
 		Session sessao = null;
 

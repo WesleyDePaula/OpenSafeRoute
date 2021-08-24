@@ -4,7 +4,7 @@ import modelo.entidade.mapa.Ponto;
 
 public interface PontoDAO {
 
-	void adicionarPonto(Ponto ponto);
+	void inserirPonto(Ponto ponto);
 	
 	void deletarPonto(Ponto ponto);
 	

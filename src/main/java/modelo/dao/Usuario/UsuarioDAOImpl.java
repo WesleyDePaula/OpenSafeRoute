@@ -22,7 +22,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		fabrica = new ConexaoFactory();	
 	}
 
-	public void cadastrarUsuario(UsuarioCadastrado usuario) {
+	public void inserirUsuario(UsuarioCadastrado usuario) {
 
 		Session sessao = null;
 

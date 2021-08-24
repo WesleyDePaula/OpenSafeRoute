@@ -4,7 +4,7 @@ import modelo.entidade.formulario.Formulario;
 
 public interface FormularioDAO {
 	
-	void registrarAvaliacao(Formulario formulario);
+	void inserirAvaliacao(Formulario formulario);
 	
 	void deletarAvaliacao(Formulario formulario);
 	
