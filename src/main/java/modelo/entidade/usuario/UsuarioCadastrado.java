@@ -155,8 +155,7 @@ public class UsuarioCadastrado extends Usuario implements Serializable {
 	public void avaliacao(Ocorrencia ocorrencia, Estrelas nivelEstrutura, Estrelas nivelIluminacao, NivelBloqueio bloqueioRuas,
 			Estrelas NivelTransito, String comentario, Ponto ponto) throws NullPointerException, StatusInvalidoException {
 		
-		Formulario formlario = new Formulario( ocorrencia,  nivelEstrutura,  nivelIluminacao,  bloqueioRuas,
-				 NivelTransito,  comentario);
+		Formulario formlario = new Formulario(ocorrencia, nivelEstrutura, nivelIluminacao, bloqueioRuas, NivelTransito, comentario, ponto, this.idUsuario));
 		
 		if(ponto.getClass().equals("PontoAvaliado") ) {
 			((PontoAvaliado) ponto).addAvaliacao(formlario);
@@ -164,6 +163,7 @@ public class UsuarioCadastrado extends Usuario implements Serializable {
 	
 		else if (ponto.getClass().equals("Ponto") ) {
 			PontoAvaliado.CriarPonto(ponto, formlario);
+			((PontoAvaliado) ponto).addAvaliacao(formlario);
 		}
 	}
 
