@@ -15,11 +15,10 @@ public class Ponto {
 	private int idPonto;
 	private Point LongLatAlt;
 
-	public Ponto(double latitude, double longitude,double altitude)
+	public Ponto(double latitude, double longitude)
 			throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
 		this.setLatitude(latitude);
 		this.setLongitude(longitude);
-		this.setAltitude(altitude);
 	}
 
 	public Ponto() {
@@ -30,6 +29,14 @@ public class Ponto {
 		return ConsultaPonto.informatLocal(local);
 	}
 
+	public void setId(int id) {
+		this.idPonto = id;
+	}
+
+	public int getId() {
+		return idPonto;
+	}
+
 	public Point getLongLatAlt() {
 		return LongLatAlt;
 	}
@@ -38,23 +45,6 @@ public class Ponto {
 		this.LongLatAlt = ponto;
 	}
 
-	public int getAltitude() {
-		return (int) getLongLatAlt().getCoordinates().getAltitude();
-	}
-
-	public void setAltitude(double altitude) {
-
-		this.LongLatAlt.getCoordinates().setAltitude(altitude);
-
-	}
-
-	public void setId(int id) {
-		this.idPonto = id;
-	}
-
-	public int getId() {
-		return idPonto;
-	}
 
 	private void setLatitude(double latitude) {
 		this.getLongLatAlt().getCoordinates().setLatitude(latitude);
@@ -80,20 +70,9 @@ public class Ponto {
 		return pontoVetro;
 	}
 
-	public ArrayList<Double> transformarPontoEmVetorComElevacao() {
-		ArrayList<Double> pontoVetro = new ArrayList<Double>(3);
-		pontoVetro.add(this.getLongitude());
-		pontoVetro.add(this.getLatitude());
-		pontoVetro.add((double) this.getAltitude());
-		return pontoVetro;
-	}
 
 	public String TransformarVetorEmString() {
 		return transformarPontoEmVetor().toString();
-	}
-
-	public String TransformarVetorComElevacaoEmString() {
-		return transformarPontoEmVetorComElevacao().toString();
 	}
 
 }
