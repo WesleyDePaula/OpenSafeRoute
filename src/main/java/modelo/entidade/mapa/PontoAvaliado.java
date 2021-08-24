@@ -103,6 +103,10 @@ public class PontoAvaliado extends Ponto implements Serializable {
 
 	}
 
+	public PontoAvaliado(Ponto ponto) throws StatusInvalidoException, NullPointerException {
+		super(ponto.getLatitude(), ponto.getLatitude());
+	}
+
 	public int getIdPontoAvaliado() {
 		return idPontoAvaliado;
 	}
@@ -130,7 +134,7 @@ public class PontoAvaliado extends Ponto implements Serializable {
 	public void setAvaliacoes(List<Formulario> avaliacoes) {
 		this.avaliacoes = avaliacoes;
 	}
-	
+
 	public void addAvaliacao(Formulario avaliacao) throws NullPointerException {
 
 		if (avaliacao == null) {
@@ -233,10 +237,20 @@ public class PontoAvaliado extends Ponto implements Serializable {
 		}
 		this.nivelDeCriminalidade = soma / getAvaliacoes().size();
 	}
-	public static PontoAvaliado CriarPonto(Ponto ponto, Formulario avaliacao) throws NullPointerException, StatusInvalidoException {
 
-		PontoAvaliado pontoavaliado = new PontoAvaliado(ponto, avaliacao);
+	public static PontoAvaliado CriarPonto(Ponto ponto, Formulario avaliacao)
+			throws NullPointerException, StatusInvalidoException {
 
-		return pontoavaliado;
+		PontoAvaliado pontoAvaliado = new PontoAvaliado(ponto, avaliacao);
+
+		return pontoAvaliado;
+	}
+
+	public static PontoAvaliado criarPontoAvaliado(Ponto ponto)
+			throws NullPointerException, StatusInvalidoException {
+
+		PontoAvaliado pontoAvaliado = new PontoAvaliado(ponto);
+
+		return pontoAvaliado;
 	}
 }

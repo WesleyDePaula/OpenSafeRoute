@@ -36,34 +36,34 @@ public class UsuarioCadastrado extends Usuario implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_usuario",nullable = false)
+	@Column(name = "id_usuario", nullable = false)
 	private int idUsuario;
-	
+
 	@Column(name = "nome_usuario", length = 45, nullable = false, unique = true)
 	private String nome;
-	
+
 	@Column(name = "senha_usuario", length = 45, nullable = false)
 	private String senha;
-	
-	
+
 	@Column(name = "email_usuario", length = 45, nullable = false, unique = true)
 	private String email;
-	
-	@OneToMany(fetch = FetchType.LAZY,mappedBy = "Usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "Usuario", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "id_usuario")
 	private List<PontoFavorito> favoritos;
-	
-	public UsuarioCadastrado() {}
-	
+
+	public UsuarioCadastrado() {
+	}
+
 	public UsuarioCadastrado(int idUsuario, String nome, String senha, String email)
 			throws StringVaziaException, EmailInvalidoException, SenhaPequenaException {
 		super();
-		
+
 		this.setNome(nome);
 		this.setSenha(senha);
 		this.setEmail(email);
 	}
-	
+
 	public UsuarioCadastrado(String nome, String senha, String email)
 			throws StringVaziaException, EmailInvalidoException, SenhaPequenaException {
 		super();
@@ -71,11 +71,11 @@ public class UsuarioCadastrado extends Usuario implements Serializable {
 		this.setSenha(senha);
 		this.setEmail(email);
 	}
-	
+
 	public int getIdUsuario() {
 		return idUsuario;
 	}
-	
+
 	public void setIdUsuario(int idUsuario) {
 		this.idUsuario = idUsuario;
 	}
@@ -152,21 +152,21 @@ public class UsuarioCadastrado extends Usuario implements Serializable {
 		return isEmailValid;
 	}
 
-	public void avaliacao(Ocorrencia ocorrencia, Estrelas nivelEstrutura, Estrelas nivelIluminacao, NivelBloqueio bloqueioRuas,
-			Estrelas NivelTransito, String comentario, Ponto ponto) throws NullPointerException, StatusInvalidoException {
-		
-		Formulario formlario = new Formulario(ocorrencia, nivelEstrutura, nivelIluminacao, bloqueioRuas, NivelTransito, comentario, ponto, this.idUsuario));
-		
-		if(ponto.getClass().equals("PontoAvaliado") ) {
-			((PontoAvaliado) ponto).addAvaliacao(formlario);
-		}
-	
-		else if (ponto.getClass().equals("Ponto") ) {
-			PontoAvaliado.CriarPonto(ponto, formlario);
-			((PontoAvaliado) ponto).addAvaliacao(formlario);
+	public void avaliacao(Ocorrencia ocorrencias, Estrelas nivelEstrutura, Estrelas nivelIluminacao,
+			NivelBloqueio bloqueioRuas, Estrelas nivelTransito, String comentario, Ponto ponto, UsuarioCadastrado usuario)
+			throws NullPointerException, StatusInvalidoException {
+
+		Formulario formulario = new Formulario();
+
+		if (ponto.getClass().equals("Ponto")) {
+			ponto = PontoAvaliado.criarPontoAvaliado(ponto);
+
+			formulario = new Formulario(ocorrencias, nivelEstrutura, nivelIluminacao, bloqueioRuas, nivelTransito, comentario, ponto,  usuario);
+
+			((PontoAvaliado) ponto).addAvaliacao(formulario);
+
 		}
 	}
-
 
 	public void favoritarENomear(Ponto ponto, String nomePonto) throws StatusInvalidoException {
 		PontoFavorito.favoritarPontoENomear(ponto, nomePonto);

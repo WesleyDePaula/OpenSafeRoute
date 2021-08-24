@@ -14,7 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import modelo.entidade.mapa.Ponto;
 import modelo.entidade.mapa.PontoAvaliado;
+import modelo.entidade.usuario.Usuario;
 import modelo.entidade.usuario.UsuarioCadastrado;
 import modelo.enumeracao.mapa.Estrelas;
 import modelo.enumeracao.mapa.NivelBloqueio;
@@ -65,6 +67,8 @@ public class Formulario implements Serializable {
 	@JoinColumn(name = "id_usuario")
 	private UsuarioCadastrado idUsuario;
 
+	private Ponto ponto;
+
 	public Formulario() {
 	}
 
@@ -98,6 +102,21 @@ public class Formulario implements Serializable {
 		setMedia();
 		setIdPontoAvaliado(idPontoAvaliado);
 		setIdUsuario(idUsuario);
+
+	}
+
+	public Formulario(Ocorrencia ocorrencias, Estrelas nivelEstrutura, Estrelas nivelIluminacao,
+			NivelBloqueio bloqueioRuas, Estrelas nivelTransito, String comentario, Ponto ponto,
+			UsuarioCadastrado usuario) {
+
+		setOcorrencia(ocorrencias);
+		setNivelEstrutura(nivelEstrutura);
+		setNivelIluminacao(nivelIluminacao);
+		setNivelBloqueio(bloqueioRuas);
+		setNivelTransito(nivelTransito);
+		setComentario(comentario);
+		setPonto(ponto);
+		setIdUsuario(usuario);
 
 	}
 
@@ -175,6 +194,14 @@ public class Formulario implements Serializable {
 
 	public void setIdUsuario(UsuarioCadastrado idUsuario) {
 		this.idUsuario = idUsuario;
+	}
+
+	public Ponto getPonto() {
+		return ponto;
+	}
+
+	public void setPonto(Ponto ponto) {
+		this.ponto = ponto;
 	}
 
 	private void setMedia() {
