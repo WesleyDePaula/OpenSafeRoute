@@ -9,26 +9,14 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import modelo.entidade.formulario.Formulario;
+import modelo.factory.conexao.ConexaoFactory;
 
 public class FormularioDAOImpl implements FormularioDAO {
 
-	private SessionFactory conectarBanco() throws SQLException {
-
-		Configuration configuracao = new Configuration();
-
-		configuracao.addAnnotatedClass(modelo.entidade.formulario.Formulario.class);
-		configuracao.addAnnotatedClass(modelo.entidade.mapa.Ponto.class);
-		configuracao.addAnnotatedClass(modelo.entidade.mapa.PontoAvaliado.class);
-		configuracao.addAnnotatedClass(modelo.entidade.usuario.UsuarioCadastrado.class);
-
-		configuracao.configure("hibernate.cfg.xml");
-
-		ServiceRegistry servico = new StandardServiceRegistryBuilder().applySettings(configuracao.getProperties())
-				.build();
-
-		SessionFactory fabricaSessao = configuracao.buildSessionFactory(servico);
-
-		return fabricaSessao;
+	private ConexaoFactory fabrica;
+	
+	public FormularioDAOImpl() {
+		fabrica = new ConexaoFactory();
 	}
 
 	@Override
@@ -38,7 +26,7 @@ public class FormularioDAOImpl implements FormularioDAO {
 
 		try {
 
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
 			sessao.save(formulario);
@@ -66,7 +54,7 @@ public class FormularioDAOImpl implements FormularioDAO {
 		
 		try {
 			
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 			
 			sessao.delete(formulario);
@@ -96,7 +84,7 @@ public class FormularioDAOImpl implements FormularioDAO {
 		
 		try {
 			
-			sessao = conectarBanco().openSession();
+			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 			
 			sessao.update(formlario);
