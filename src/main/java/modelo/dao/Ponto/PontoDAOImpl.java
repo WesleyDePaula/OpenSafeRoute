@@ -11,7 +11,7 @@ import org.hibernate.service.ServiceRegistry;
 import modelo.entidade.mapa.Ponto;
 import modelo.factory.conexao.ConexaoFactory;
 
-public class PontoDAOImpl {
+public class PontoDAOImpl implements PontoDAO{
 
 	private ConexaoFactory fabrica;
 	
