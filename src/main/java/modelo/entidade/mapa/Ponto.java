@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.ws.rs.client.Client;
-
 import javax.ws.rs.client.ClientBuilder;
 import javax.persistence.Entity;
 import javax.ws.rs.core.MediaType;
@@ -37,6 +36,14 @@ public class Ponto implements Serializable {
 
 	
 	public Ponto() {}
+
+	public Ponto(double latitude, double longitude) throws StatusInvalidoException {
+		this.setLatitude(latitude);
+		this.setLongitude(longitude);
+		this.setAltitude();
+	}
+	
+	
 	
 	public static Ponto informatLocal(String local) throws  StatusInvalidoException{
 		String localParaURL = local.replaceAll(" ", "%20");
