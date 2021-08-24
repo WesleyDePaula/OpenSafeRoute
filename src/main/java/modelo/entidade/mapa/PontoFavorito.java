@@ -13,6 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import modelo.entidade.usuario.UsuarioCadastrado;
 import modelo.excecao.mapa.StatusInvalidoException;
 
@@ -42,14 +45,14 @@ public class PontoFavorito extends Ponto implements Serializable {
 	public PontoFavorito() {
 	}
 
-	public PontoFavorito(Long idPontoFav, Ponto ponto, String nomePonto) throws StatusInvalidoException {
+	public PontoFavorito(Long idPontoFav, Ponto ponto, String nomePonto) throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
 		super(ponto.getLatitude(), ponto.getLongitude());
 
 		setIdPontoFav(idPontoFav);
 		setNomePonto(nomePonto);
 	}
 
-	public PontoFavorito(Ponto ponto, String nomePonto) throws StatusInvalidoException {
+	public PontoFavorito(Ponto ponto, String nomePonto) throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
 		super(ponto.getLatitude(), ponto.getLongitude());
 		setNomePonto(nomePonto);
 	}
@@ -87,7 +90,7 @@ public class PontoFavorito extends Ponto implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public static PontoFavorito favoritarPontoENomear(Ponto ponto, String nomePonto) throws StatusInvalidoException {
+	public static PontoFavorito favoritarPontoENomear(Ponto ponto, String nomePonto) throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
 
 		return new PontoFavorito(ponto, nomePonto);
 

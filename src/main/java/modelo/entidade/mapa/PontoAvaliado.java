@@ -2,6 +2,9 @@ package modelo.entidade.mapa;
 
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import modelo.entidade.formulario.Formulario;
 import modelo.enumeracao.mapa.NivelBloqueio;
 import modelo.excecao.mapa.StatusInvalidoException;
@@ -17,7 +20,7 @@ public class PontoAvaliado extends Ponto {
 	private NivelBloqueio bloqueio;
 	private int mediaDeAvaliacao;
 
-	public PontoAvaliado(int idPontoAvaliado, Ponto ponto, Formulario avaliacao) throws StatusInvalidoException, NullPointerException {
+	public PontoAvaliado(int idPontoAvaliado, Ponto ponto, Formulario avaliacao) throws StatusInvalidoException, NullPointerException, JsonMappingException, JsonProcessingException {
 		super(ponto.getLatitude(), ponto.getLatitude());
 		
 		this.setIdPontoAvaliado(idPontoAvaliado);
@@ -25,7 +28,7 @@ public class PontoAvaliado extends Ponto {
 
 	}
 	
-	public PontoAvaliado(Ponto ponto, Formulario avaliacao) throws StatusInvalidoException, NullPointerException {
+	public PontoAvaliado(Ponto ponto, Formulario avaliacao) throws StatusInvalidoException, NullPointerException, JsonMappingException, JsonProcessingException {
 		super(ponto.getLatitude(), ponto.getLatitude());
 		this.addAvaliacao(avaliacao);
 
@@ -148,7 +151,7 @@ public class PontoAvaliado extends Ponto {
 		}
 		this.nivelDeCriminalidade = soma / getAvaliacoes().size();
 	}
-	public static PontoAvaliado CriarPonto(Ponto ponto, Formulario avaliacao) throws NullPointerException, StatusInvalidoException {
+	public static PontoAvaliado CriarPonto(Ponto ponto, Formulario avaliacao) throws NullPointerException, StatusInvalidoException, JsonMappingException, JsonProcessingException {
 
 		PontoAvaliado pontoavaliado = new PontoAvaliado(ponto, avaliacao);
 
