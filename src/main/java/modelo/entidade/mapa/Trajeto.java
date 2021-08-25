@@ -7,21 +7,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.Response;
-
 import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.geojson.FeatureCollection;
-import org.geojson.GeoJsonObject;
 import org.geojson.LineString;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -38,8 +31,6 @@ public class Trajeto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-public class Trajeto {
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -54,14 +45,6 @@ public class Trajeto {
 	@JoinColumn(name = "pontos_trajeto") // FALTA FAZER O TIPO DO ATRIBUTO
 	private LineString pontos;
 
-	@ManyToOne
-
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id_partida_trajeto")
-	private Ponto inicio;
-
-	@Column(name = "pontos_trajeto") // FALTA FAZER O TIPO DO ATRIBUTO
-	private LineString pontos;
 
 	@GeneratedValue(strategy = GenerationType.AUTO)
 
@@ -158,4 +141,4 @@ public class Trajeto {
 		ConsultaTrajeto.criarLineString(inicio, chegada, transporteUsado);
 	}
 
-}}
+}
