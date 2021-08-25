@@ -37,7 +37,7 @@ public class ConsultaTrajeto {
 
 	}
 
-	private static ArrayList<ArrayList<ArrayList<PontoAvaliado>>> evitarPontos(ArrayList<PontoAvaliado> pontos,
+	public static ArrayList<ArrayList<ArrayList<PontoAvaliado>>> evitarPontos(ArrayList<PontoAvaliado> pontos,
 			Ponto inicio, Ponto chegada, MeioDeTransporte transporte) {
 		ArrayList<ArrayList<ArrayList<PontoAvaliado>>> evitar = new ArrayList<ArrayList<ArrayList<PontoAvaliado>>>();
 

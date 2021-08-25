@@ -132,10 +132,4 @@ public class Trajeto {
 		ConsultaTrajeto.criarLineString(inicio, chegada, transporteUsado);
 	}
 
-	private ArrayList<ArrayList<ArrayList<PontoAvaliado>>> evitarPontos(ArrayList<PontoAvaliado> pontos, Ponto inicio, Ponto chegada, MeioDeTransporte transporte) {
-	
-		ConsultaTrajeto.
-	
-	}
-
 }
