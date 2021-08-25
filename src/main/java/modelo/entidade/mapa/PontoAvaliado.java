@@ -65,7 +65,8 @@ public class PontoAvaliado extends Ponto implements Serializable {
 
 	public PontoAvaliado(double latitude, double longitude, int idPontoAvaliado, List<Formulario> avaliacoes,
 			double nivelDeCriminalidade, int nivelDeEstruturaDaRua, int nivelDeIluminacao, int nivelDeTransito,
-			NivelBloqueio bloqueio, int mediaDeAvaliacao) throws StatusInvalidoException {
+			NivelBloqueio bloqueio, int mediaDeAvaliacao)
+			throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
 		super(latitude, longitude);
 		this.setIdPontoAvaliado(idPontoAvaliado);
 		this.setAvaliacoes(avaliacoes);
@@ -80,7 +81,7 @@ public class PontoAvaliado extends Ponto implements Serializable {
 
 	public PontoAvaliado(double latitude, double longitude, List<Formulario> avaliacoes, double nivelDeCriminalidade,
 			int nivelDeEstruturaDaRua, int nivelDeIluminacao, int nivelDeTransito, NivelBloqueio bloqueio,
-			int mediaDeAvaliacao) throws StatusInvalidoException {
+			int mediaDeAvaliacao) throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
 		super(latitude, longitude);
 		this.setAvaliacoes(avaliacoes);
 		this.setNivelDeCriminalidade();
@@ -91,7 +92,8 @@ public class PontoAvaliado extends Ponto implements Serializable {
 		this.setMediaDeAvaliacao();
 	}
 
-	public PontoAvaliado(int idPontoAvaliado, Ponto ponto, Formulario avaliacao) throws StatusInvalidoException, NullPointerException, JsonMappingException, JsonProcessingException {
+	public PontoAvaliado(int idPontoAvaliado, Ponto ponto, Formulario avaliacao)
+			throws StatusInvalidoException, NullPointerException, JsonMappingException, JsonProcessingException {
 		super(ponto.getLatitude(), ponto.getLatitude());
 
 		this.setIdPontoAvaliado(idPontoAvaliado);
@@ -99,8 +101,8 @@ public class PontoAvaliado extends Ponto implements Serializable {
 
 	}
 
-	
-	public PontoAvaliado(Ponto ponto, Formulario avaliacao) throws StatusInvalidoException, NullPointerException, JsonMappingException, JsonProcessingException {
+	public PontoAvaliado(Ponto ponto, Formulario avaliacao)
+			throws StatusInvalidoException, NullPointerException, JsonMappingException, JsonProcessingException {
 		super(ponto.getLatitude(), ponto.getLatitude());
 		this.addAvaliacao(avaliacao);
 
@@ -133,7 +135,7 @@ public class PontoAvaliado extends Ponto implements Serializable {
 	public void setAvaliacoes(List<Formulario> avaliacoes) {
 		this.avaliacoes = avaliacoes;
 	}
-	
+
 	public void addAvaliacao(Formulario avaliacao) throws NullPointerException {
 
 		if (avaliacao == null) {
@@ -236,7 +238,9 @@ public class PontoAvaliado extends Ponto implements Serializable {
 		}
 		this.nivelDeCriminalidade = soma / getAvaliacoes().size();
 	}
-	public static PontoAvaliado CriarPonto(Ponto ponto, Formulario avaliacao) throws NullPointerException, StatusInvalidoException, JsonMappingException, JsonProcessingException {
+
+	public static PontoAvaliado CriarPonto(Ponto ponto, Formulario avaliacao)
+			throws NullPointerException, StatusInvalidoException, JsonMappingException, JsonProcessingException {
 
 		PontoAvaliado pontoavaliado = new PontoAvaliado(ponto, avaliacao);
 
