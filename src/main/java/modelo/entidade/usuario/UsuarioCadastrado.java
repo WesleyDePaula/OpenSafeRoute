@@ -19,6 +19,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import modelo.entidade.formulario.Formulario;
 import modelo.entidade.mapa.Ponto;
 import modelo.entidade.mapa.PontoAvaliado;
@@ -176,7 +179,7 @@ public class UsuarioCadastrado extends Usuario implements Serializable {
 	}
 
 
-	public void favoritarENomear(Ponto ponto, String nomePonto) throws StatusInvalidoException {
+	public void favoritarENomear(Ponto ponto, String nomePonto) throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
 		PontoFavorito.favoritarPontoENomear(ponto, nomePonto);
 		favoritos.add((PontoFavorito) ponto);
 
