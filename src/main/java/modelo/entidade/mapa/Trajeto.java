@@ -55,7 +55,7 @@ public class Trajeto {
 		this.setInicio(inicio);
 		this.setChegada(chegada);
 		this.setTransporteUsado(transporteUsado);
-		this.setPontos();
+		this.criarLineString(inicio, chegada, transporteUsado);
 	}
 
 	public Trajeto(int id, String inicio, String chegada, MeioDeTransporte transporteUsado)
@@ -69,7 +69,7 @@ public class Trajeto {
 		this.setInicio(inicio);
 		this.setChegada(chegada);
 		this.setTransporteUsado(transporteUsado);
-		this.setPontos();
+		this.criarLineString(inicio, chegada, transporteUsado);
 	}
 
 	public Trajeto(String inicio, String chegada, MeioDeTransporte transporteUsado)
@@ -102,8 +102,8 @@ public class Trajeto {
 		return pontos;
 	}
 
-	public LineString setPontos() throws JsonParseException, org.codehaus.jackson.map.JsonMappingException, IOException{
-		return ConsultaTrajeto.setPontos(inicio, chegada, transporteUsado);
+	public void setPontos(LineString pontos) {
+		this.pontos = pontos;
 	}
 
 	public Ponto getChegada() {
@@ -125,6 +125,11 @@ public class Trajeto {
 
 	public void setTransporteUsado(MeioDeTransporte transporteUsado) {
 		this.transporteUsado = transporteUsado;
+	}
+
+	public void criarLineString(Ponto inicio, Ponto chegada, MeioDeTransporte transporteUsado)
+			throws JsonParseException, org.codehaus.jackson.map.JsonMappingException, IOException {
+		ConsultaTrajeto.criarLineString(inicio, chegada, transporteUsado);
 	}
 
 	private ArrayList<ArrayList<ArrayList<PontoAvaliado>>> evitarPontos(ArrayList<PontoAvaliado> pontos, Ponto inicio, Ponto chegada, MeioDeTransporte transporte) {

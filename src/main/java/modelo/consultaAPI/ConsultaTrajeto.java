@@ -21,14 +21,13 @@ import modelo.excecao.mapa.StatusInvalidoException;
 
 public class ConsultaTrajeto {
 
-	public static LineString setPontos(Ponto inicio, Ponto chegada,MeioDeTransporte transporte) throws JsonParseException, org.codehaus.jackson.map.JsonMappingException, IOException {
+	public static LineString criarLineString(Ponto inicio, Ponto chegada, MeioDeTransporte transporte)
+			throws JsonParseException, org.codehaus.jackson.map.JsonMappingException, IOException {
 		Client client = ClientBuilder.newClient();
 		Entity<String> payload = Entity.json("{\"coordinates\":[" + inicio.TransformarVetorEmString() + ","
-				+ chegada.TransformarVetorEmString()
-				+ "],\"elevation\":\"true");
+				+ chegada.TransformarVetorEmString() + "],\"elevation\":\"true");
 		Response response = client
-				.target("https://api.openrouteservice.org/v2/directions/" + transporte.getDescricao()
-						+ "/geojson")
+				.target("https://api.openrouteservice.org/v2/directions/" + transporte.getDescricao() + "/geojson")
 				.request().header("Authorization", "5b3ce3597851110001cf624839b64a140f534a82a4750d447a4df110")
 				.header("Accept", "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8")
 				.header("Content-Type", "application/json; charset=utf-8").post(payload);
@@ -38,11 +37,12 @@ public class ConsultaTrajeto {
 
 	}
 
-	private static ArrayList<ArrayList<ArrayList<PontoAvaliado>>> evitarPontos(ArrayList<PontoAvaliado> pontos, Ponto inicio, Ponto chegada,MeioDeTransporte transporte) {
+	private static ArrayList<ArrayList<ArrayList<PontoAvaliado>>> evitarPontos(ArrayList<PontoAvaliado> pontos,
+			Ponto inicio, Ponto chegada, MeioDeTransporte transporte) {
 		ArrayList<ArrayList<ArrayList<PontoAvaliado>>> evitar = new ArrayList<ArrayList<ArrayList<PontoAvaliado>>>();
 
 		int contador = 0;
-		
+
 		for (int nota = 10; nota >= 0; nota--) {
 
 			for (int i = 1; i < pontos.size(); i++) {
@@ -79,5 +79,5 @@ public class ConsultaTrajeto {
 		}
 		return evitar;
 	}
-	
+
 }
