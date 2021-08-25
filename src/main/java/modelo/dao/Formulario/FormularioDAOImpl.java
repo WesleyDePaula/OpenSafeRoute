@@ -1,8 +1,5 @@
-package modelo.dao.Usuario;
+package modelo.dao.Formulario;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.hibernate.Session;
@@ -11,18 +8,19 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-import modelo.entidade.usuario.UsuarioCadastrado;
+import modelo.entidade.formulario.Formulario;
 import modelo.factory.conexao.ConexaoFactory;
 
-public class UsuarioDAOImpl implements UsuarioDAO {
+public class FormularioDAOImpl implements FormularioDAO {
 
 	private ConexaoFactory fabrica;
 	
-	public UsuarioDAOImpl() {
-		fabrica = new ConexaoFactory();	
+	public FormularioDAOImpl() {
+		fabrica = new ConexaoFactory();
 	}
 
-	public void inserirUsuario(UsuarioCadastrado usuario) {
+	@Override
+	public void inserirAvaliacao(Formulario formulario) {
 
 		Session sessao = null;
 
@@ -31,35 +29,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
-			sessao.save(usuario);
-
-			sessao.getTransaction().commit();
-
-		} catch (Exception erro) {
-			erro.printStackTrace();
-
-			if (sessao.getTransaction() != null) {
-				sessao.getTransaction().rollback();
-			}
-
-		} finally {
-
-			if (sessao != null) {
-				sessao.close();
-			}
-		}
-	}
-
-	public void deletarUsuario(UsuarioCadastrado usuario) {
-
-		Session sessao = null;
-
-		try {
-
-			sessao = fabrica.getConexao().openSession();
-			sessao.beginTransaction();
-
-			sessao.delete(usuario);
+			sessao.save(formulario);
 
 			sessao.getTransaction().commit();
 
@@ -78,8 +48,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		}
 	}
 	
-	public void atualizarUsuario(UsuarioCadastrado usuario) {
-		
+	public void deletarAvaliacao(Formulario formulario) {
+		 
 		Session sessao = null;
 		
 		try {
@@ -87,8 +57,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 			
-			sessao.update(usuario);
-		
+			sessao.delete(formulario);
+			
 			sessao.getTransaction().commit();
 			
 		} catch (Exception sqlException) {
@@ -107,5 +77,49 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		}
 		
 	}
+	
+	public void atualizarAvaliacao(Formulario formlario) {
+		
+		Session sessao = null;
+		
+		try {
+			
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
+			
+			sessao.update(formlario);
+			
+			sessao.getTransaction().commit();
+			
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+ 		
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

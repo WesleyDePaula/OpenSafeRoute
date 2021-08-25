@@ -1,79 +1,130 @@
-package model.entities.map;
+package modelo.entidade.mapa;
+
+import java.io.Serializable;
+
+import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import org.codehaus.jackson.JsonParseException;
+import org.geojson.LineString;
 
-import model.enumeration.map.MeioDeTransporte;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
-public class Trajeto {
+import modelo.consultaAPI.ConsultaTrajeto;
+import modelo.enumeracao.mapa.MeioDeTransporte;
+import modelo.excecao.mapa.StatusInvalidoException;
 
+ 
+@Entity
+@Table(name = "trajeto")
+public class Trajeto implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id_trajeto")
+	private int idTrajeto;
+
+
+	@ManyToOne
+	@JoinColumn(name = "id_partida_trajeto")
 	private Ponto inicio;
-	private List<Ponto> pontos;
+
+	@JoinColumn(name = "pontos_trajeto") // FALTA FAZER O TIPO DO ATRIBUTO
+	private LineString pontos;
+
+
+	@GeneratedValue(strategy = GenerationType.AUTO)
+
+	@Column(name = "id_chegada_trajeto")
 	private Ponto chegada;
+
 	private MeioDeTransporte transporteUsado;
 
-	public Trajeto(ponto inicio,Ponto chegada,MeioDeTransporte transporteUsado) {
+	public Trajeto() {
+	}
+
+	public Trajeto(int id, Ponto inicio, Ponto chegada, MeioDeTransporte transporteUsado)
+			throws StatusInvalidoException, JsonParseException, org.codehaus.jackson.map.JsonMappingException,
+			IOException {
+		this.setIdTrajeto(id);
 		this.setInicio(inicio);
 		this.setChegada(chegada);
 		this.setTransporteUsado(transporteUsado);
-		this.setPontos();
-		
+		this.criarLineString(inicio, chegada, transporteUsado);
 	}
 
-	public Ponto informatLocal(String local) {
-//		String localParaURL = local.replaceAll(" ", "%20");
-//		Client client = ClientBuilder.newClient();
-//		Response response = client.target(
-//				"https://api.openrouteservice.org/geocode/search?api_key=5b3ce3597851110001cf624839b64a140f534a82a4750d447a4df110&text="
-//						+ localParaURL)
-//				.request(MediaType.TEXT_PLAIN_TYPE)
-//				.header("Accept", "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8")
-//				.get();
-		// tratar para devolover latitude e longitude
-		// return Ponto localTratado = new Ponto(latitude, longitude);
+	public Trajeto(int id, String inicio, String chegada, MeioDeTransporte transporteUsado)
+			throws JsonParseException, org.codehaus.jackson.map.JsonMappingException, JsonMappingException,
+			JsonProcessingException, StatusInvalidoException, IOException {
+		this(id, Ponto.informatLocal(inicio), Ponto.informatLocal(chegada), transporteUsado);
+	}
 
-		return new Ponto(0, 0);
+	public Trajeto(Ponto inicio, Ponto chegada, MeioDeTransporte transporteUsado) throws StatusInvalidoException,
+			JsonParseException, org.codehaus.jackson.map.JsonMappingException, IOException {
+		this.setInicio(inicio);
+		this.setChegada(chegada);
+		this.setTransporteUsado(transporteUsado);
+		this.criarLineString(inicio, chegada, transporteUsado);
+	}
+
+	public Trajeto(String inicio, String chegada, MeioDeTransporte transporteUsado)
+			throws JsonParseException, org.codehaus.jackson.map.JsonMappingException, JsonMappingException,
+			JsonProcessingException, StatusInvalidoException, IOException {
+		this(Ponto.informatLocal(inicio), Ponto.informatLocal(chegada), transporteUsado);
+	}
+
+	public int getIdTrajeto() {
+		return idTrajeto;
+	}
+
+	public void setIdTrajeto(int idTrajeto) {
+		this.idTrajeto = idTrajeto;
 	}
 
 	public Ponto getInicio() {
 		return inicio;
 	}
 
-	public void setInicio(String inicio) {
-		this.inicio = this.informatLocal(inicio);
+	public void setInicio(String inicio) throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
+		this.inicio = Ponto.informatLocal(inicio);
 	}
 
-	public List<Ponto> getPontos() {
+	private void setInicio(Ponto inicio) {
+		this.inicio = inicio;
+	}
+
+	public LineString getPontos() {
 		return pontos;
 	}
 
-	public void setPontos() {
-//		Client client = ClientBuilder.newClient();
-//		Entity<String> payload = Entity.json("{\"coordinates\":["","",""],\"elevation\":\"true\",\"extra_info\":[\"roadaccessrestrictions\"]}");
-//		Response response = client.target("https://api.openrouteservice.org/v2/directions/"+getTransporteUsado().getDescricao()+"/geojson")
-//		  .request()
-//		  .header("Authorization", "5b3ce3597851110001cf624839b64a140f534a82a4750d447a4df110")
-//		  .header("Accept", "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8")
-//		  .header("Content-Type", "application/json; charset=utf-8")
-//		  .post(payload);
-
-		// Tratar GeoJSON
-
+	public void setPontos(LineString pontos) {
+		this.pontos = pontos;
 	}
 
 	public Ponto getChegada() {
 		return chegada;
 	}
 
-	public void setChegada(String chegada) {
-		this.chegada = this.informatLocal(chegada);
+	public void setChegada(String chegada)
+			throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
+		this.chegada = Ponto.informatLocal(chegada);
+	}
+
+	private void setChegada(Ponto chegada) {
+		this.chegada = chegada;
 	}
 
 	public MeioDeTransporte getTransporteUsado() {
@@ -84,16 +135,10 @@ public class Trajeto {
 		this.transporteUsado = transporteUsado;
 	}
 
-	public String[][] gerarLinhaParaDefinirTrajeto() {
-//		ArrayList<ArrayList<String>> linhaDePontos = new ArrayList<ArrayList<String>>();
-//		Scanner sc = new Scanner(System.in);
-//
-//		System.out.print("Inicio: ");
-//		String local = sc.next();
-//		linhaDePontos.add(this.setInicio(local));
 
-		return null;
-
+	public void criarLineString(Ponto inicio, Ponto chegada, MeioDeTransporte transporteUsado)
+			throws JsonParseException, org.codehaus.jackson.map.JsonMappingException, IOException {
+		ConsultaTrajeto.criarLineString(inicio, chegada, transporteUsado);
 	}
 
 }

@@ -4,6 +4,10 @@ import modelo.entidade.usuario.UsuarioCadastrado;
 
 public interface UsuarioDAO {
 	
-	void cadastrarUsuario(UsuarioCadastrado usuario);
+	void inserirUsuario(UsuarioCadastrado usuario);
+	
+	void deletarUsuario(UsuarioCadastrado usuario);
+	
+	void atualizarUsuario(UsuarioCadastrado usuario);
 	
 }

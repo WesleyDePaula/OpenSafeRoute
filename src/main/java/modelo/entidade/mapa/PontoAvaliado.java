@@ -1,28 +1,119 @@
 package modelo.entidade.mapa;
 
-import java.rmi.StubNotFoundException;
+import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import modelo.entidade.formulario.Formulario;
-import modelo.enumeracao.mapa.Estrelas;
 import modelo.enumeracao.mapa.NivelBloqueio;
-import modelo.enumeracao.mapa.Ocorrencia;
 import modelo.excecao.mapa.StatusInvalidoException;
 
-public class PontoAvaliado extends Ponto {
+@Entity
+@Table(name = "ponto_avaliado")
+public class PontoAvaliado extends Ponto implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_ponto", nullable = false, unique = true, columnDefinition = "UNSIGNED INT")
+	private int idPontoAvaliado;
 
 	private List<Formulario> avaliacoes;
+
+	@Column(name = "nivel_Criminalidade_Ponto_Avaliado", precision = 4, scale = 2, nullable = false)
 	private double nivelDeCriminalidade;
+
+	@Column(name = "nivel_Estrutura_Ponto_Avaliado", nullable = false, columnDefinition = "UNSIGNED INT")
 	private int nivelDeEstruturaDaRua;
+
+	@Column(name = "nivel_Iluminacao_Ponto_Avaliado", nullable = false)
 	private int nivelDeIluminacao;
+
+	@Column(name = "nivel_Trasito_Ponto_Avaliado", nullable = false)
 	private int nivelDeTransito;
+
+	@Column(name = "nivel_Bloqueio_Ponto_Avaliado", nullable = false)
+	@Enumerated(EnumType.STRING)
 	private NivelBloqueio bloqueio;
+
+	@Column(name = "media_Avaliacao_Ponto_Avaliado", nullable = false)
 	private int mediaDeAvaliacao;
 
-	public PontoAvaliado(Ponto ponto, Formulario avaliacao) throws StatusInvalidoException, NullPointerException {
+	@OneToOne(fetch = FetchType.LAZY)
+	@MapsId
+	@JoinColumn(name = "id_cliente")
+	private Ponto ponto;
+
+	public PontoAvaliado() {
+	}
+
+	public PontoAvaliado(double latitude, double longitude, int idPontoAvaliado, List<Formulario> avaliacoes,
+			double nivelDeCriminalidade, int nivelDeEstruturaDaRua, int nivelDeIluminacao, int nivelDeTransito,
+			NivelBloqueio bloqueio, int mediaDeAvaliacao)
+			throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
+		super(latitude, longitude);
+		this.setIdPontoAvaliado(idPontoAvaliado);
+		this.setAvaliacoes(avaliacoes);
+		this.setNivelDeCriminalidade();
+		this.setNivelDeEstruturaDaRua();
+		this.setNivelDeIluminacao();
+		this.setNivelDeTransito();
+		this.setBloqueio();
+		this.setMediaDeAvaliacao();
+
+	}
+
+	public PontoAvaliado(double latitude, double longitude, List<Formulario> avaliacoes, double nivelDeCriminalidade,
+			int nivelDeEstruturaDaRua, int nivelDeIluminacao, int nivelDeTransito, NivelBloqueio bloqueio,
+			int mediaDeAvaliacao) throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
+		super(latitude, longitude);
+		this.setAvaliacoes(avaliacoes);
+		this.setNivelDeCriminalidade();
+		this.setNivelDeEstruturaDaRua();
+		this.setNivelDeIluminacao();
+		this.setNivelDeTransito();
+		this.setBloqueio();
+		this.setMediaDeAvaliacao();
+	}
+
+	public PontoAvaliado(int idPontoAvaliado, Ponto ponto, Formulario avaliacao)
+			throws StatusInvalidoException, NullPointerException, JsonMappingException, JsonProcessingException {
+		super(ponto.getLatitude(), ponto.getLatitude());
+
+		this.setIdPontoAvaliado(idPontoAvaliado);
+		this.addAvaliacao(avaliacao);
+
+	}
+
+	public PontoAvaliado(Ponto ponto, Formulario avaliacao)
+			throws StatusInvalidoException, NullPointerException, JsonMappingException, JsonProcessingException {
 		super(ponto.getLatitude(), ponto.getLatitude());
 		this.addAvaliacao(avaliacao);
 
+	}
+
+	public int getIdPontoAvaliado() {
+		return idPontoAvaliado;
+	}
+
+	public void setIdPontoAvaliado(int idPontoAvaliado) {
+		this.idPontoAvaliado = idPontoAvaliado;
 	}
 
 	public int getMediaDeAvaliacao() {
@@ -39,6 +130,10 @@ public class PontoAvaliado extends Ponto {
 
 	public List<Formulario> getAvaliacoes() {
 		return avaliacoes;
+	}
+
+	public void setAvaliacoes(List<Formulario> avaliacoes) {
+		this.avaliacoes = avaliacoes;
 	}
 
 	public void addAvaliacao(Formulario avaliacao) throws NullPointerException {
@@ -72,7 +167,7 @@ public class PontoAvaliado extends Ponto {
 			this.setBloqueio();
 			this.setNivelDeTransito();
 			this.setMediaDeAvaliacao();
-		
+
 		}
 	}
 
@@ -126,6 +221,15 @@ public class PontoAvaliado extends Ponto {
 		return nivelDeTransito;
 	}
 
+	public Ponto getPonto() {
+		return ponto;
+
+	}
+
+	public void setPonto(Ponto ponto) {
+		this.ponto = ponto;
+	}
+
 	private void setNivelDeTransito() {
 
 		double soma = 0;
@@ -135,4 +239,11 @@ public class PontoAvaliado extends Ponto {
 		this.nivelDeCriminalidade = soma / getAvaliacoes().size();
 	}
 
+	public static PontoAvaliado CriarPonto(Ponto ponto, Formulario avaliacao)
+			throws NullPointerException, StatusInvalidoException, JsonMappingException, JsonProcessingException {
+
+		PontoAvaliado pontoavaliado = new PontoAvaliado(ponto, avaliacao);
+
+		return pontoavaliado;
+	}
 }

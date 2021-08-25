@@ -1,4 +1,4 @@
-package model.exception.usuario;
+package modelo.excecao.usuario;
 
 public class StringVaziaException extends Exception {
 	

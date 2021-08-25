@@ -1,28 +1,19 @@
-package modelo.dao.Usuario;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+package modelo.dao.PontoFavorito;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 
-import modelo.entidade.usuario.UsuarioCadastrado;
+import modelo.entidade.mapa.PontoFavorito;
 import modelo.factory.conexao.ConexaoFactory;
 
-public class UsuarioDAOImpl implements UsuarioDAO {
+public class PontoFavDAOImpl implements PontoFavDAO {
 
 	private ConexaoFactory fabrica;
-	
-	public UsuarioDAOImpl() {
-		fabrica = new ConexaoFactory();	
+
+	public PontoFavDAOImpl() {
+		fabrica = new ConexaoFactory();
 	}
 
-	public void inserirUsuario(UsuarioCadastrado usuario) {
+	public void inserirPontoFav(PontoFavorito pontoFav) {
 
 		Session sessao = null;
 
@@ -31,7 +22,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
-			sessao.save(usuario);
+			sessao.save(pontoFav);
 
 			sessao.getTransaction().commit();
 
@@ -48,9 +39,10 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 				sessao.close();
 			}
 		}
+
 	}
 
-	public void deletarUsuario(UsuarioCadastrado usuario) {
+	public void deletarPontoFav(PontoFavorito pontoFav) {
 
 		Session sessao = null;
 
@@ -59,7 +51,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
 
-			sessao.delete(usuario);
+			sessao.delete(pontoFav);
 
 			sessao.getTransaction().commit();
 
@@ -76,24 +68,24 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 				sessao.close();
 			}
 		}
+
 	}
-	
-	public void atualizarUsuario(UsuarioCadastrado usuario) {
-		
+
+	public void atualizarPontoFav(PontoFavorito pontoFav) {
+
 		Session sessao = null;
-		
+
 		try {
-			
+
 			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
-			
-			sessao.update(usuario);
-		
-			sessao.getTransaction().commit();
-			
-		} catch (Exception sqlException) {
 
-			sqlException.printStackTrace();
+			sessao.update(pontoFav);
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception erro) {
+			erro.printStackTrace();
 
 			if (sessao.getTransaction() != null) {
 				sessao.getTransaction().rollback();
@@ -105,7 +97,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 				sessao.close();
 			}
 		}
-		
+
 	}
 
 }
