@@ -44,6 +44,7 @@ public class PontoAvaliado extends Ponto implements Serializable {
 
 	@Column(name = "nivel_Trasito_Ponto_Avaliado", nullable = false)
 	private int nivelDeTransito;
+	
 
 	@Column(name = "nivel_Bloqueio_Ponto_Avaliado", nullable = false)
 	@Enumerated(EnumType.STRING)

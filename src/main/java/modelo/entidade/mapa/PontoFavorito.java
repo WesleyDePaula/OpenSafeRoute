@@ -25,12 +25,12 @@ public class PontoFavorito extends Ponto implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id_ponto_favorito")
+	@Column(name = "id_ponto_favorito",nullable = false, unique = true	, columnDefinition = "UNSIGNED INT")
 	private Long idPontoFav;
 
-	@Column(name = "nome_ponto_favorito", length = 20, nullable = false, unique = false)
+	@Column(name = "nome_ponto_favorito", length = 20, nullable = false)
 	private String nomePonto;
-
+	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_ponto")
 	private Ponto ponto;

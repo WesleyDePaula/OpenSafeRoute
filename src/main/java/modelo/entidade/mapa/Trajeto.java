@@ -1,5 +1,6 @@
-package modelo.entidade.mapa;
+		package modelo.entidade.mapa;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.persistence.Column;
@@ -17,8 +18,10 @@ import modelo.enumeracao.mapa.MeioDeTransporte;
 import modelo.excecao.mapa.StatusInvalidoException;
 
 
-public class Trajeto {
-
+public class Trajeto implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_trajeto")
@@ -36,6 +39,8 @@ public class Trajeto {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_chegada_trajeto")
 	private Ponto chegada;
+	
+	public Trajeto() {}
 	
 	private MeioDeTransporte transporteUsado;
 

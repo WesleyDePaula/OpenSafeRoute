@@ -17,7 +17,7 @@ public class Principal {
 		UsuarioDAO dao = new UsuarioDAOImpl();
 		UsuarioCadastrado usuario = new UsuarioCadastrado("2222", "333333333", "444@gmail.com");
 
-		dao.cadastrarUsuario(usuario);
+		dao.inserirUsuario(usuario);
 
 		System.out.println(usuario.getIdUsuario());
 		

@@ -31,38 +31,38 @@ public class Formulario implements Serializable {
 	@Column(name = "id_formulario")
 	private int idFormulario;
 
-	@Column(name = "media_formulario", scale = 2, precision = 1, nullable = false, unique = false)
+	@Column(name = "media_formulario", scale = 2, precision = 1, nullable = false)
 	private double media;
 
-	@Column(name = "ocorrencia_Formulario", nullable = false, unique = false)
+	@Column(name = "ocorrencia_Formulario", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Ocorrencia ocorrencia;
 
-	@Column(name = "nivel_estrutura_Formulario", nullable = false, unique = false)
+	@Column(name = "nivel_estrutura_Formulario", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Estrelas nivelEstrutura;
 
-	@Column(name = "nivel_Iluminacao_Formulario", nullable = false, unique = false)
+	@Column(name = "nivel_Iluminacao_Formulario", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Estrelas nivelIluminacao;
 
-	@Column(name = "bloqueio_Ruas_Formulario", nullable = false, unique = false)
+	@Column(name = "bloqueio_Ruas_Formulario", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private NivelBloqueio bloqueioRuas;
 
-	@Column(name = "nivel_Transito_Formulario", nullable = false, unique = false)
+	@Column(name = "nivel_Transito_Formulario", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Estrelas NivelTransito;
 
-	@Column(name = "comentario_Formulario", length = 300, nullable = true, unique = true)
+	@Column(name = "comentario_Formulario", length = 300)
 	private String comentario;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_ponto_avaliado")
+	@JoinColumn(name = "id_ponto_avaliado", nullable = false, columnDefinition = "UNSIGNED INT")
 	private PontoAvaliado idPontoAvaliado;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_usuario")
+	@JoinColumn(name = "id_usuario", columnDefinition = "UNSIGNED INT")
 	private UsuarioCadastrado idUsuario;
 
 	public Formulario() {
