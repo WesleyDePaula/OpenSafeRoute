@@ -16,6 +16,9 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import modelo.entidade.formulario.Formulario;
 import modelo.enumeracao.mapa.NivelBloqueio;
 import modelo.excecao.mapa.StatusInvalidoException;
@@ -88,8 +91,7 @@ public class PontoAvaliado extends Ponto implements Serializable {
 		this.setMediaDeAvaliacao();
 	}
 
-	public PontoAvaliado(int idPontoAvaliado, Ponto ponto, Formulario avaliacao)
-			throws StatusInvalidoException, NullPointerException {
+	public PontoAvaliado(int idPontoAvaliado, Ponto ponto, Formulario avaliacao) throws StatusInvalidoException, NullPointerException, JsonMappingException, JsonProcessingException {
 		super(ponto.getLatitude(), ponto.getLatitude());
 
 		this.setIdPontoAvaliado(idPontoAvaliado);
@@ -97,7 +99,8 @@ public class PontoAvaliado extends Ponto implements Serializable {
 
 	}
 
-	public PontoAvaliado(Ponto ponto, Formulario avaliacao) throws StatusInvalidoException, NullPointerException {
+	
+	public PontoAvaliado(Ponto ponto, Formulario avaliacao) throws StatusInvalidoException, NullPointerException, JsonMappingException, JsonProcessingException {
 		super(ponto.getLatitude(), ponto.getLatitude());
 		this.addAvaliacao(avaliacao);
 
@@ -233,7 +236,7 @@ public class PontoAvaliado extends Ponto implements Serializable {
 		}
 		this.nivelDeCriminalidade = soma / getAvaliacoes().size();
 	}
-	public static PontoAvaliado CriarPonto(Ponto ponto, Formulario avaliacao) throws NullPointerException, StatusInvalidoException {
+	public static PontoAvaliado CriarPonto(Ponto ponto, Formulario avaliacao) throws NullPointerException, StatusInvalidoException, JsonMappingException, JsonProcessingException {
 
 		PontoAvaliado pontoavaliado = new PontoAvaliado(ponto, avaliacao);
 
