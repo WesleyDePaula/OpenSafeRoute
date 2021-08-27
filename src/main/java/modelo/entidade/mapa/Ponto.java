@@ -28,10 +28,10 @@ public class Ponto implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_ponto",nullable = false,unique = true)
+	@Column(name = "id_ponto",nullable = false,unique = true, columnDefinition = "UNSIGNED INT")
 	private int idPonto; 
 	
-	@Column(columnDefinition = "long_lat_ponto")
+	@Column(columnDefinition = "long_lat_ponto" , nullable = false)
 	@Type(type = "org.hibernate.spatial.GeometryType")
 	private Point LongLatAlt;
 
