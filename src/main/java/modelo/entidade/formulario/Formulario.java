@@ -14,7 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import modelo.entidade.mapa.Ponto;
 import modelo.entidade.mapa.PontoAvaliado;
+
 import modelo.entidade.usuario.UsuarioCadastrado;
 import modelo.enumeracao.mapa.Estrelas;
 import modelo.enumeracao.mapa.NivelBloqueio;
@@ -59,7 +61,7 @@ public class Formulario implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_ponto_avaliado")
-	private PontoAvaliado idPontoAvaliado;
+	private Ponto idPontoAvaliado;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_usuario")
@@ -90,6 +92,22 @@ public class Formulario implements Serializable {
 
 		setIdFormulario(idFormulario);
 		setOcorrencia(ocorrencia);
+		setNivelEstrutura(nivelEstrutura);
+		setNivelIluminacao(nivelIluminacao);
+		setNivelBloqueio(bloqueioRuas);
+		setNivelTransito(NivelTransito);
+		setComentario(comentario);
+		setMedia();
+		setIdPontoAvaliado(idPontoAvaliado);
+		setIdUsuario(idUsuario);
+
+	}
+
+	public Formulario(Ocorrencia ocorrencias, Estrelas nivelEstrutura, Estrelas nivelIluminacao,
+			NivelBloqueio bloqueioRuas, Estrelas NivelTransito, String comentario, Ponto idPontoAvaliado,
+			UsuarioCadastrado idUsuario) {
+
+		setOcorrencia(ocorrencias);
 		setNivelEstrutura(nivelEstrutura);
 		setNivelIluminacao(nivelIluminacao);
 		setNivelBloqueio(bloqueioRuas);
@@ -161,11 +179,11 @@ public class Formulario implements Serializable {
 		return media;
 	}
 
-	public PontoAvaliado getIdPontoAvaliado() {
+	public Ponto getIdPontoAvaliado() {
 		return idPontoAvaliado;
 	}
 
-	public void setIdPontoAvaliado(PontoAvaliado idPontoAvaliado) {
+	public void setIdPontoAvaliado(Ponto idPontoAvaliado) {
 		this.idPontoAvaliado = idPontoAvaliado;
 	}
 
