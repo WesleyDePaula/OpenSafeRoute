@@ -16,7 +16,6 @@ import javax.persistence.Table;
 
 import modelo.entidade.mapa.Ponto;
 import modelo.entidade.mapa.PontoAvaliado;
-
 import modelo.entidade.usuario.UsuarioCadastrado;
 import modelo.enumeracao.mapa.Estrelas;
 import modelo.enumeracao.mapa.NivelBloqueio;
