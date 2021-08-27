@@ -3,13 +3,15 @@ package modelo.entidade.mapa;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import javax.persistence.Entity;
+
 import org.geojson.Point;
 import org.hibernate.annotations.Type;
 
@@ -21,6 +23,7 @@ import modelo.excecao.mapa.StatusInvalidoException;
 
 @Entity
 @Table(name = "Ponto")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Ponto implements Serializable {
 
 
