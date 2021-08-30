@@ -114,7 +114,7 @@ public class PontoAvaliadoDAOImpl implements PontoAvaliadoDAO {
 			}
 		}
 
-		return clientes;
+		return pontosAvaliados;
 
 	}
 
