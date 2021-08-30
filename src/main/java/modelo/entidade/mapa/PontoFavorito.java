@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -21,17 +22,17 @@ import modelo.excecao.mapa.StatusInvalidoException;
 
 @Entity
 @Table(name = "ponto_favorito")
-
+@PrimaryKeyJoinColumn(name="id_ponto")
 public class PontoFavorito extends Ponto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id_ponto_favorito")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_ponto_favorito", nullable = false, unique = true, columnDefinition = "UNSIGNED LONG")
 	private Long idPontoFav;
 
-	@Column(name = "nome_ponto_favorito", length = 20, nullable = false, unique = false)
+	@Column(name = "nome_ponto_favorito", length = 20, nullable = false )
 	private String nomePonto;
 
 	@OneToMany(fetch = FetchType.LAZY)
