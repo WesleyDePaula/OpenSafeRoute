@@ -60,7 +60,7 @@ public class PontoAvaliado extends Ponto implements Serializable {
 	public PontoAvaliado() {
 	}
 
-	public PontoAvaliado(double latitude, double longitude, int idPontoAvaliado, List<Formulario> avaliacoes,
+	public PontoAvaliado(double latitude, double longitude, Long idPontoAvaliado, List<Formulario> avaliacoes,
 			double nivelDeCriminalidade, int nivelDeEstruturaDaRua, int nivelDeIluminacao, int nivelDeTransito,
 			NivelBloqueio bloqueio, int mediaDeAvaliacao) throws StatusInvalidoException {
 		super(latitude, longitude);
@@ -107,7 +107,7 @@ public class PontoAvaliado extends Ponto implements Serializable {
 		super(ponto.getLatitude(), ponto.getLatitude());
 	}
 
-	public int getIdPontoAvaliado() {
+	public Long getIdPontoAvaliado() {
 		return idPontoAvaliado;
 	}
 
