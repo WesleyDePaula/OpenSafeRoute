@@ -118,4 +118,8 @@ public class PontoAvaliadoDAOImpl implements PontoAvaliadoDAO {
 
 	}
 
+	public List<PontoAvaliado> recuperarPontoAvMaiorQue(int nota){
+		
+	}
+	
 }
