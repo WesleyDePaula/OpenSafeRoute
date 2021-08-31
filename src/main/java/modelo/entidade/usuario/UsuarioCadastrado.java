@@ -40,7 +40,7 @@ public class UsuarioCadastrado extends Usuario implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_usuario", nullable = false)
-	private int idUsuario;
+	private Long idUsuario;
 
 	@Column(name = "nome_usuario", length = 45, nullable = false, unique = true)
 	private String nome;
@@ -58,7 +58,7 @@ public class UsuarioCadastrado extends Usuario implements Serializable {
 	public UsuarioCadastrado() {
 	}
 
-	public UsuarioCadastrado(int idUsuario, String nome, String senha, String email)
+	public UsuarioCadastrado(Long idUsuario, String nome, String senha, String email)
 			throws StringVaziaException, EmailInvalidoException, SenhaPequenaException {
 		super();
 
@@ -75,11 +75,11 @@ public class UsuarioCadastrado extends Usuario implements Serializable {
 		this.setEmail(email);
 	}
 
-	public int getIdUsuario() {
+	public Long getIdUsuario() {
 		return idUsuario;
 	}
 
-	public void setIdUsuario(int idUsuario) {
+	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 

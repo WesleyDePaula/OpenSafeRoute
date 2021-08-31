@@ -29,7 +29,7 @@ public class Ponto implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_ponto",nullable = false,unique = true)
-	private int idPonto; 
+	private Long idPonto; 
 	
 	@Column(columnDefinition = "long_lat_ponto")
 	@Type(type = "org.hibernate.spatial.GeometryType")
@@ -50,11 +50,11 @@ public class Ponto implements Serializable {
 		return ConsultaPonto.informatLocal(local);
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.idPonto = id;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return idPonto;
 	}
 
