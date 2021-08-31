@@ -30,7 +30,7 @@ public class Formulario implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_formulario")
-	private int idFormulario;
+	private Long idFormulario;
 
 	@Column(name = "media_formulario", scale = 2, precision = 1, nullable = false, unique = false)
 	private double media;
@@ -85,7 +85,7 @@ public class Formulario implements Serializable {
 
 	}
 
-	public Formulario(int idFormulario, Ocorrencia ocorrencia, Estrelas nivelEstrutura, Estrelas nivelIluminacao,
+	public Formulario(Long idFormulario, Ocorrencia ocorrencia, Estrelas nivelEstrutura, Estrelas nivelIluminacao,
 			NivelBloqueio bloqueioRuas, Estrelas NivelTransito, String comentario, PontoAvaliado idPontoAvaliado,
 			UsuarioCadastrado idUsuario) {
 
@@ -118,11 +118,11 @@ public class Formulario implements Serializable {
 
 	}
 
-	public int getIdFormulario() {
+	public Long getIdFormulario() {
 		return idFormulario;
 	}
 
-	public void setIdFormulario(int idFormulario) {
+	public void setIdFormulario(Long idFormulario) {
 		this.idFormulario = idFormulario;
 	}
 
