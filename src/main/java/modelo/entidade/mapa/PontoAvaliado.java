@@ -16,6 +16,9 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import modelo.entidade.formulario.Formulario;
 import modelo.enumeracao.mapa.NivelBloqueio;
 import modelo.excecao.mapa.StatusInvalidoException;
@@ -29,7 +32,7 @@ public class PontoAvaliado extends Ponto implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_ponto", nullable = false, unique = true, columnDefinition = "UNSIGNED INT")
-	private int idPontoAvaliado;
+	private Long idPontoAvaliado;
 
 	private List<Formulario> avaliacoes;
 
@@ -60,9 +63,9 @@ public class PontoAvaliado extends Ponto implements Serializable {
 	public PontoAvaliado() {
 	}
 
-	public PontoAvaliado(double latitude, double longitude, int idPontoAvaliado, List<Formulario> avaliacoes,
+	public PontoAvaliado(double latitude, double longitude, Long idPontoAvaliado, List<Formulario> avaliacoes,
 			double nivelDeCriminalidade, int nivelDeEstruturaDaRua, int nivelDeIluminacao, int nivelDeTransito,
-			NivelBloqueio bloqueio, int mediaDeAvaliacao) throws StatusInvalidoException {
+			NivelBloqueio bloqueio, int mediaDeAvaliacao) throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
 		super(latitude, longitude);
 		this.setIdPontoAvaliado(idPontoAvaliado);
 		this.setAvaliacoes(avaliacoes);
@@ -77,7 +80,7 @@ public class PontoAvaliado extends Ponto implements Serializable {
 
 	public PontoAvaliado(double latitude, double longitude, List<Formulario> avaliacoes, double nivelDeCriminalidade,
 			int nivelDeEstruturaDaRua, int nivelDeIluminacao, int nivelDeTransito, NivelBloqueio bloqueio,
-			int mediaDeAvaliacao) throws StatusInvalidoException {
+			int mediaDeAvaliacao) throws StatusInvalidoException, JsonMappingException, JsonProcessingException {
 		super(latitude, longitude);
 		this.setAvaliacoes(avaliacoes);
 		this.setNivelDeCriminalidade();
@@ -88,8 +91,8 @@ public class PontoAvaliado extends Ponto implements Serializable {
 		this.setMediaDeAvaliacao();
 	}
 
-	public PontoAvaliado(int idPontoAvaliado, Ponto ponto, Formulario avaliacao)
-			throws StatusInvalidoException, NullPointerException {
+	public PontoAvaliado(Long idPontoAvaliado, Ponto ponto, Formulario avaliacao)
+			throws StatusInvalidoException, NullPointerException, JsonMappingException, JsonProcessingException {
 		super(ponto.getLatitude(), ponto.getLatitude());
 
 		this.setIdPontoAvaliado(idPontoAvaliado);
@@ -97,21 +100,21 @@ public class PontoAvaliado extends Ponto implements Serializable {
 
 	}
 
-	public PontoAvaliado(Ponto ponto, Formulario avaliacao) throws StatusInvalidoException, NullPointerException {
+	public PontoAvaliado(Ponto ponto, Formulario avaliacao) throws StatusInvalidoException, NullPointerException, JsonMappingException, JsonProcessingException {
 		super(ponto.getLatitude(), ponto.getLatitude());
 		this.addAvaliacao(avaliacao);
 
 	}
 
-	public PontoAvaliado(Ponto ponto) throws StatusInvalidoException, NullPointerException {
+	public PontoAvaliado(Ponto ponto) throws StatusInvalidoException, NullPointerException, JsonMappingException, JsonProcessingException {
 		super(ponto.getLatitude(), ponto.getLatitude());
 	}
 
-	public int getIdPontoAvaliado() {
+	public Long getIdPontoAvaliado() {
 		return idPontoAvaliado;
 	}
 
-	public void setIdPontoAvaliado(int idPontoAvaliado) {
+	public void setIdPontoAvaliado(Long idPontoAvaliado) {
 		this.idPontoAvaliado = idPontoAvaliado;
 	}
 
@@ -239,7 +242,7 @@ public class PontoAvaliado extends Ponto implements Serializable {
 	}
 
 	public static PontoAvaliado CriarPonto(Ponto ponto, Formulario avaliacao)
-			throws NullPointerException, StatusInvalidoException {
+			throws NullPointerException, StatusInvalidoException, JsonMappingException, JsonProcessingException {
 
 		PontoAvaliado pontoAvaliado = new PontoAvaliado(ponto, avaliacao);
 
@@ -247,7 +250,7 @@ public class PontoAvaliado extends Ponto implements Serializable {
 	}
 
 	public static PontoAvaliado criarPontoAvaliado(Ponto ponto)
-			throws NullPointerException, StatusInvalidoException {
+			throws NullPointerException, StatusInvalidoException, JsonMappingException, JsonProcessingException {
 
 		PontoAvaliado pontoAvaliado = new PontoAvaliado(ponto);
 

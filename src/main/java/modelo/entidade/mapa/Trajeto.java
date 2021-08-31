@@ -35,7 +35,7 @@ public class Trajeto implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_trajeto")
-	private int idTrajeto;
+	private Long idTrajeto;
 
 
 	@ManyToOne
@@ -56,7 +56,7 @@ public class Trajeto implements Serializable {
 	public Trajeto() {
 	}
 
-	public Trajeto(int id, Ponto inicio, Ponto chegada, MeioDeTransporte transporteUsado)
+	public Trajeto(Long id, Ponto inicio, Ponto chegada, MeioDeTransporte transporteUsado)
 			throws StatusInvalidoException, JsonParseException, org.codehaus.jackson.map.JsonMappingException,
 			IOException {
 		this.setIdTrajeto(id);
@@ -66,7 +66,7 @@ public class Trajeto implements Serializable {
 		this.criarLineString(inicio, chegada, transporteUsado);
 	}
 
-	public Trajeto(int id, String inicio, String chegada, MeioDeTransporte transporteUsado)
+	public Trajeto(Long id, String inicio, String chegada, MeioDeTransporte transporteUsado)
 			throws JsonParseException, org.codehaus.jackson.map.JsonMappingException, JsonMappingException,
 			JsonProcessingException, StatusInvalidoException, IOException {
 		this(id, Ponto.informatLocal(inicio), Ponto.informatLocal(chegada), transporteUsado);
@@ -86,11 +86,11 @@ public class Trajeto implements Serializable {
 		this(Ponto.informatLocal(inicio), Ponto.informatLocal(chegada), transporteUsado);
 	}
 
-	public int getIdTrajeto() {
+	public Long getIdTrajeto() {
 		return idTrajeto;
 	}
 
-	public void setIdTrajeto(int idTrajeto) {
+	public void setIdTrajeto(Long idTrajeto) {
 		this.idTrajeto = idTrajeto;
 	}
 

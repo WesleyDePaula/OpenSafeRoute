@@ -1,6 +1,11 @@
 package modelo.dao.Ponto;
 
 import java.sql.SQLException;
+import java.util.List;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -77,4 +82,45 @@ public class PontoDAOImpl implements PontoDAO{
 		
 	}
 
+	public List<Ponto> recuperarPontos(){
+		
+		Session sessao = null;
+		List<Ponto> pontos = null;
+		
+		try {
+			
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
+			
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
+			
+			CriteriaQuery<Ponto> criteria = construtor.createQuery(Ponto.class);
+			Root<Ponto> raizPonto = criteria.from(Ponto.class);
+			
+			criteria.select(raizPonto);
+			
+			pontos = sessao.createQuery(criteria).getResultList();
+			
+			sessao.getTransaction().commit();
+			
+		}catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return pontos;
+		
+		
+	}
+	
 }
