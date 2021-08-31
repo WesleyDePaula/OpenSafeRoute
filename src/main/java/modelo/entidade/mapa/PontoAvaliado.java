@@ -29,7 +29,7 @@ public class PontoAvaliado extends Ponto implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_ponto", nullable = false, unique = true, columnDefinition = "UNSIGNED INT")
-	private int idPontoAvaliado;
+	private Long idPontoAvaliado;
 
 	private List<Formulario> avaliacoes;
 
@@ -88,7 +88,7 @@ public class PontoAvaliado extends Ponto implements Serializable {
 		this.setMediaDeAvaliacao();
 	}
 
-	public PontoAvaliado(int idPontoAvaliado, Ponto ponto, Formulario avaliacao)
+	public PontoAvaliado(Long idPontoAvaliado, Ponto ponto, Formulario avaliacao)
 			throws StatusInvalidoException, NullPointerException {
 		super(ponto.getLatitude(), ponto.getLatitude());
 
@@ -111,7 +111,7 @@ public class PontoAvaliado extends Ponto implements Serializable {
 		return idPontoAvaliado;
 	}
 
-	public void setIdPontoAvaliado(int idPontoAvaliado) {
+	public void setIdPontoAvaliado(Long idPontoAvaliado) {
 		this.idPontoAvaliado = idPontoAvaliado;
 	}
 
