@@ -11,5 +11,7 @@ public interface PontoAvaliadoDAO {
 	void deletarPontoAvaliado(PontoAvaliado pontoAvaliado);
 	
 	List<PontoAvaliado> recuperarPontosAvaliados();
+	
+	List<PontoAvaliado> recuperarPontoAvMaiorQue(int nota);
 
 }
