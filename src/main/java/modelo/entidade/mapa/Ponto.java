@@ -20,6 +20,7 @@ import modelo.consultaAPI.ConsultaPonto;
 import modelo.excecao.mapa.StatusInvalidoException;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "Ponto")
 public class Ponto implements Serializable {
 
