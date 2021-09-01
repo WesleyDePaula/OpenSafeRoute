@@ -120,28 +120,28 @@ public class PontoAvaliadoDAOImpl implements PontoAvaliadoDAO {
 
 	}
 
-	public List<PontoAvaliado> recuperarPontoAvMaiorQue(int nota){
-		
+	public List<PontoAvaliado> recuperarPontoAvMaiorQue(int nota) {
+
 		Session sessao = null;
 		List<PontoAvaliado> pontos = null;
-		
+
 		try {
-		
+
 			sessao = fabrica.getConexao().openSession();
 			sessao.beginTransaction();
-			
+
 			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
 
 			CriteriaQuery<PontoAvaliado> criteria = construtor.createQuery(PontoAvaliado.class);
 			Root<PontoAvaliado> raizPonto = criteria.from(PontoAvaliado.class);
-			
+
 			criteria.select(raizPonto).where(construtor.ge(raizPonto.get(Media_.mediaDeAvaliacao), nota));
-		
+
 			TypedQuery<PontoAvaliado> queryPonto = sessao.createQuery(criteria);
 			pontos = queryPonto.getResultList();
-			
+
 			sessao.getTransaction().commit();
-			
+
 		} catch (Exception sqlException) {
 
 			sqlException.printStackTrace();
@@ -156,9 +156,48 @@ public class PontoAvaliadoDAOImpl implements PontoAvaliadoDAO {
 				sessao.close();
 			}
 		}
-		
+
 		return pontos;
-		
+
 	}
-	
+
+	public List<PontoAvaliado> recuperarPontoAvMenorQue(int nota) {
+		Session sessao = null;
+		List<PontoAvaliado> pontos = null;
+
+		try {
+
+			sessao = fabrica.getConexao().openSession();
+			sessao.beginTransaction();
+
+			CriteriaBuilder construtor = sessao.getCriteriaBuilder();
+
+			CriteriaQuery<PontoAvaliado> criteria = construtor.createQuery(PontoAvaliado.class);
+			Root<PontoAvaliado> raizPonto = criteria.from(PontoAvaliado.class);
+
+			criteria.select(raizPonto).where(construtor.lessThan(raizPonto.get(Media_.mediaDeAvaliacao), nota));
+
+			TypedQuery<PontoAvaliado> queryPonto = sessao.createQuery(criteria);
+			pontos = queryPonto.getResultList();
+
+			sessao.getTransaction().commit();
+
+		} catch (Exception sqlException) {
+
+			sqlException.printStackTrace();
+
+			if (sessao.getTransaction() != null) {
+				sessao.getTransaction().rollback();
+			}
+
+		} finally {
+
+			if (sessao != null) {
+				sessao.close();
+			}
+		}
+
+		return pontos;
+
+	}
 }
