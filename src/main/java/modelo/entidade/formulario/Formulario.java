@@ -28,30 +28,30 @@ public class Formulario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_formulario")
+	@GeneratedValue(strategy = GenerationType.IDENTITY  )
+	@Column(name = "id_formulario", nullable = false, unique = true, columnDefinition = "UNSIGNED INT")
 	private Long idFormulario;
 
 	@Column(name = "media_formulario", scale = 2, precision = 1, nullable = false, unique = false)
 	private double media;
 
-	@Column(name = "ocorrencia_Formulario", nullable = false, unique = false)
+	@Column(name = "ocorrencia_Formulario", nullable = false, columnDefinition = "enum default NENHUMA")
 	@Enumerated(EnumType.STRING)
 	private Ocorrencia ocorrencia;
 
-	@Column(name = "nivel_estrutura_Formulario", nullable = false, unique = false)
+	@Column(name = "nivel_estrutura_Formulario", nullable = false, columnDefinition = "enum default ZERO" )
 	@Enumerated(EnumType.STRING)
 	private Estrelas nivelEstrutura;
 
-	@Column(name = "nivel_Iluminacao_Formulario", nullable = false, unique = false)
+	@Column(name = "nivel_Iluminacao_Formulario", nullable = false, columnDefinition = "enum default ZERO")
 	@Enumerated(EnumType.STRING)
 	private Estrelas nivelIluminacao;
 
-	@Column(name = "bloqueio_Ruas_Formulario", nullable = false, unique = false)
+	@Column(name = "bloqueio_Ruas_Formulario", nullable = false, columnDefinition = "enum default LIVRE")
 	@Enumerated(EnumType.STRING)
 	private NivelBloqueio bloqueioRuas;
 
-	@Column(name = "nivel_Transito_Formulario", nullable = false, unique = false)
+	@Column(name = "nivel_Transito_Formulario", nullable = false, columnDefinition = "enum default ZERO")
 	@Enumerated(EnumType.STRING)
 	private Estrelas NivelTransito;
 
@@ -59,11 +59,11 @@ public class Formulario implements Serializable {
 	private String comentario;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_ponto_avaliado")
+	@JoinColumn(name = "id_ponto_avaliado", nullable = false, columnDefinition = "UNSIGNED INT")
 	private Ponto idPontoAvaliado;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_usuario")
+	@JoinColumn(name = "id_usuario", columnDefinition = "enum default NULL" + "UNSIGNED INT")
 	private UsuarioCadastrado idUsuario;
 
 	public Formulario() {
