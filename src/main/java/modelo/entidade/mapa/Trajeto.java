@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.codehaus.jackson.JsonParseException;
 import org.geojson.LineString;
+import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -33,8 +34,8 @@ public class Trajeto implements Serializable {
 
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id_trajeto")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_trajeto", nullable = false, unique = true , columnDefinition = "UNSIGNED INT" )
 	private Long idTrajeto;
 
 
@@ -42,13 +43,14 @@ public class Trajeto implements Serializable {
 	@JoinColumn(name = "id_partida_trajeto")
 	private Ponto inicio;
 
-	@JoinColumn(name = "pontos_trajeto") // FALTA FAZER O TIPO DO ATRIBUTO
+	@Column(name = "pontos_trajeto", nullable = false) // FALTA FAZER O TIPO DO ATRIBUTO
+	@Type(type = "org.hibernatespatial.mgeom")
 	private LineString pontos;
 
 
 	@GeneratedValue(strategy = GenerationType.AUTO)
 
-	@Column(name = "id_chegada_trajeto")
+	@JoinColumn(name = "id_chegada_trajeto")
 	private Ponto chegada;
 
 	private MeioDeTransporte transporteUsado;
