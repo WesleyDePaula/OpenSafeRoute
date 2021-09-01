@@ -21,7 +21,7 @@ import modelo.excecao.mapa.StatusInvalidoException;
 
 public class ConsultaTrajeto {
 
-	public static Class<? extends GeoJsonObject> criarLineString(Ponto inicio, Ponto chegada, MeioDeTransporte transporte)
+	public static Class<?> criarLineString(Ponto inicio, Ponto chegada, MeioDeTransporte transporte)
 			throws JsonParseException, org.codehaus.jackson.map.JsonMappingException, IOException {
 		Client client = ClientBuilder.newClient();
 		Entity<String> payload = Entity.json("{\"coordinates\":[" + inicio.TransformarVetorEmString() + ","
@@ -32,8 +32,7 @@ public class ConsultaTrajeto {
 				.header("Accept", "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8")
 				.header("Content-Type", "application/json; charset=utf-8").post(payload);
 
-		FeatureCollection  object = new ObjectMapper().readValue(response.readEntity(String.class), FeatureCollection .class);
-		return object.getClass();
+		return response.readEntity(String.class).getClass();
 
 	}
 
